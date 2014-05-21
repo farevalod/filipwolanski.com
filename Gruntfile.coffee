@@ -1,5 +1,6 @@
 # list of the pages to be included in the site
-pages = ["montreal-realestate"]
+pages = []
+#pages = ["montreal-realestate"]
 
 files =
   sass : ['styles/*.sass']
