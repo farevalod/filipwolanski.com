@@ -9,5 +9,11 @@ block styles
   link(rel='stylesheet', href='styles/map.css')
 
 block body
-  h1 Montreal Real Estate 2014
+  center
+    h1 Montreal Real Estate 2014
+    svg#map(height=650, width=700)
 
+  #popover.shadow
+    .popover-content
+      .title This is the title
+      .body Here is some info

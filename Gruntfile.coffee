@@ -4,7 +4,7 @@ pages = ["montreal-realestate"]
 files =
   sass : ['styles/*.sass']
   jade : ['index.jade']
-  assets : ['assets/*', 'vendor/*']
+  assets : ['assets/*', 'vendor/*', 'favicon.ico', 'robots.txt']
   coffee : ['scripts/*.coffee']
 
 for page in pages

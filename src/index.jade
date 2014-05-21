@@ -1,12 +1,12 @@
 extends layouts/wrapper
 
 block body
-  center
+  .center
     img.mainImage(src='assets/lambda.jpg')
 
     h1 Filip Wolanski
-    .linkContainter
-      .inlineLink ubriety
-      .inlineLink ubriety
-    .clear
 
+    .linkContainer
+      a.inlineLink(href="http://ubriety.com") ubriety
+      a.inlineLink(href="https://github.com/fwolanski") github
+    .clear

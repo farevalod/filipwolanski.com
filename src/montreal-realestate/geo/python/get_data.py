@@ -1,6 +1,7 @@
-#!/usr/local/bin/python
+#!/usr/bin/env python
 
 import urllib
+import random
 import urllib2
 import json
 import time
@@ -38,9 +39,10 @@ def api_request_for_properties(lat, long, lat_min, long_min, lat_max, long_max):
 
     json_string = response.read()
     data = json.loads(json_string)
-    print get_value("Paging", data)
+    #print get_value("Paging", data)
     res = get_value("Results", data)
-    print "Length of results: " + str(len(res))
+    if len(res) > 900:
+      print "Length of results: " + str(len(res))
     return res
 
 def get_value(value, data, important = True):
@@ -118,20 +120,21 @@ def get_comprehension(start_lat, start_long, end_lat, end_long, delta):
 
 c, conn = setup_db()
 
-start_lat = 45.40
-start_long = -74.03
-end_lat = 45.67
-end_long = -73.40
-delta = 0.05
+start_lat = 45.16
+start_long = -74.27
+end_lat = 45.83
+end_long = -73.18
+delta = 0.03
 
 coordinates = get_comprehension(start_lat, start_long, end_lat, end_long, delta)
 
-print "Running for: " + str(len(coordinates))
-
+count = 0
+length = len(coordinates)
 for coord in coordinates:
-    print "Getting:", coord[0], coord[1]
+    count +=1
+    print "Getting ", count, " of ", length
     save_data_for_tile(coord[0], coord[1], delta)
-    time.sleep(5)
+    time.sleep(random.randint(5,15))
 
 conn.close()
 
