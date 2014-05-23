@@ -4,20 +4,17 @@ block scripts
   script(src="/vendor/d3.min.js")
   script(src="/vendor/topojson.v1.min.js")
   script(src="/vendor/colorbrewer.js")
-  script(src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js")
   script(src="scripts/map.js")
 
 block styles
   link(rel='stylesheet', href='styles/map.css')
-  link(rel="stylesheet", href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css")
 
 block body
   center
     h1 Montreal Real Estate 2014
 
-  #map
-  //-.map-container
-    //-svg#map(height=650, width=700)
+  .map-container
+    svg#map(height=650, width=700)
 
   p Here be some description
 

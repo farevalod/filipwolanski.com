@@ -1,46 +1,48 @@
-mouse =
-  x: 0
-  y: 0
-  scrollTop: 0
-document.addEventListener "mousemove", ((e) ->
-  mouse.x = e.clientX or e.pageX
-  mouse.y = e.clientY or e.pageY
-), false
-document.addEventListener "scroll", ((e) ->
-  mouse.scrollTop = document.body.scrollTop
-), false
+bounds = null
+path = null
+loc = [45.5, -73.5]
+map = L.map('map').setView(loc, 10)
+L.tileLayer 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+    maxZoom: 18
+.addTo(map)
 
-svg = d3.select "#map"
-popover = d3.select "#popover"
+# leaflet defines the d3 geographic projection
+project = (x) ->
+  point = map.latLngToLayerPoint(new L.LatLng(x[1], x[0]))
+  [point.x, point.y]
 
-projection = d3.geo.transverseMercator()
-  .scale 60000
-  .rotate [73.6, -45.6]
-path = d3.geo.path().projection(projection)
+svg = d3.select(map.getPanes().overlayPane)
+  .append("svg")
+
+reset = ->
+  bottomLeft = project(bounds[0])
+  topRight = project(bounds[1])
+
+  svg.attr("width", topRight[0] - bottomLeft[0])
+    .attr("height", bottomLeft[1] - topRight[1])
+    .style("margin-left", bottomLeft[0] + "px")
+    .style("margin-top", topRight[1] + "px")
+
+  svg.selectAll("g").attr("transform", "translate(" + -bottomLeft[0] + "," + -topRight[1] + ")")
+  svg.selectAll("path").attr("d", path)
 
 d3.json "assets/montreal.topo.json", (error, mtl) ->
-  console.log error
+
+  bounds = d3.geo.bounds(topojson.feature(mtl, mtl.objects['montreal.data']))
+  colors = d3.scale.ordinal().domain(d3.range(0,2000)).range(colorbrewer.YlGn[9])
+  path = d3.geo.path().projection(project)
+
   svg.append "g"
-    .on "mouseover", (d) ->
-      popover
-        .style 'opacity', 100
-    .on "mouseout", (d) ->
-      popover
-        .style 'opacity', 0
+    .attr("class", "leaflet-zoom-hide")
     .selectAll "path"
     .data(topojson.feature(mtl, mtl.objects['montreal.data']).features)
     .enter()
-    .append("path")
-    .attr("class", "land")
-    .attr("d", path)
-    .on "mousemove", (d) ->
-      popover.style 'top', (mouse.y + mouse.scrollTop + 50 ) + 'px'
-      .style 'left', (mouse.x - 100) + 'px'
-      .select ".title"
-      .text d.properties.name
-      popover.select ".body"
-        .text d.properties.data_points
-      #console.log d.properties
-      #console.log d.properties.name, d.properties
+    .append "path"
+    .attr "class", "land"
+    .attr "d", path
+    .style "fill", (d)-> colors d.properties.data_points
+
+  reset()
 
 
