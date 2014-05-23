@@ -4,22 +4,32 @@ block scripts
   script(src="/vendor/d3.min.js")
   script(src="/vendor/topojson.v1.min.js")
   script(src="/vendor/colorbrewer.js")
-  script(src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js")
+  script(src="/vendor/leaflet.js")
   script(src="scripts/map.js")
 
 block styles
   link(rel='stylesheet', href='styles/map.css')
-  link(rel="stylesheet", href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css")
+  link(rel="stylesheet", href="/vendor/leaflet.css")
 
 block body
-  center
-    h1 Montreal Real Estate 2014
+  #top.main-container.center
+    h1.no-padding Mapping Montreal Real Estate
+    h3.no-padding Exploring data from the Canadian Real Estate Association
 
+  .above-map-spacer
   #map
-  //-.map-container
-    //-svg#map(height=650, width=700)
+  .below-map-spacer
+  #bottom.main-container
+    .option.ib
+      .img.ib
+      .desc.ib.clear This is the item
+    .option.ib
+      .img.ib
+      .desc.ib.clear This is the item with a really long text thing going on
+    .option.ib
+      .img.ib
+      .desc.ib.clear This is the item
 
-  p Here be some description
 
   #popover.shadow
     .popover-content

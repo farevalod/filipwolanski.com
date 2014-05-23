@@ -1,10 +1,25 @@
 bounds = null
 path = null
 loc = [45.5, -73.5]
-map = L.map('map').setView(loc, 10)
+southWest = L.latLng(45.16, -74.27)
+northEast = L.latLng(45.83, -73.18)
+bounds = L.latLngBounds(southWest, northEast)
+
+resize = ->
+  topHeight = document.getElementById('top').offsetHeight
+  bottomHeight = document.getElementById('bottom').offsetHeight
+  d3.select "#map"
+    .style "height", (window.innerHeight - topHeight - bottomHeight - 2) + "px"
+
+window.onresize = resize
+resize()
+
+map = L.map 'map'
+  .setView loc, 11
+  .setMaxBounds bounds
 L.tileLayer 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
-    maxZoom: 18
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>',
+    minZoom: 11
 .addTo(map)
 
 # leaflet defines the d3 geographic projection
@@ -26,6 +41,8 @@ reset = ->
 
   svg.selectAll("g").attr("transform", "translate(" + -bottomLeft[0] + "," + -topRight[1] + ")")
   svg.selectAll("path").attr("d", path)
+
+map.on "viewreset", reset
 
 d3.json "assets/montreal.topo.json", (error, mtl) ->
 

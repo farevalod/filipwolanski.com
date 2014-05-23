@@ -1,16 +1,41 @@
-$map-height: 400px
+.main-container
+  padding: 0.5rem
 
-.map-container
+.above-map-spacer
+  background-color: #000
   width: 100%
-  height: $map-height
-  background-color: #E5E3DF
+  height: 1px
+.below-map-spacer
+  background-color: #000
+  width: 100%
+  height: 1px
+
 #map
   width: 100%
-  height: $map-height
-  .land
-    opacity: 1
+  svg
+    .land
+      opacity: 0.5
+    .land:hover
+      stroke: black
+
+$optionHeight: 3em
+
+#bottom
+  .option
+    cursor: pointer
+    .img
+      height: 100%
+      width: $optionHeight
+      border: 1px solid #000
+    .desc
+      vertical-align: top
+      max-width: 15rem
+      padding: 0.5rem
+    height: $optionHeight
+
 
 #popover
+  display: none
   opacity: 0
   position: absolute
   top: 0

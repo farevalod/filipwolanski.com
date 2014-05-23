@@ -2,10 +2,24 @@ $base0: #333333
 $base1: #666666
 $base2: #999999
 
+
+@media only screen and (max-width: 480px)
+  html
+    font-size: 12px
+
+@media only screen and (min-width: 480px) and (max-width: 768px)
+  html
+    font-size: 14px
+
+@media only screen and (min-width: 768px)
+  html
+    font-size: 16px
+
+
 body
   font-family: "Source Sans Pro", sans-serif
   font-weight: 300
-  font-size: 1.2em
+  font-size: 1rem
 
   .center
     text-align: center
@@ -13,22 +27,36 @@ body
     .mainImage
       width: 100px
       height: 100px
-      padding: 1em
+      padding: 1rem
 
-    h1
-      font-weight: 700
-      font-size: 2em
-      color: $base0
 
     .linkContainer
-      padding: 1em 0 1em 0
+      padding: 1rem 0 1rem 0
 
       a.inlineLink
         text-decoration: none
         display: inline-block
-        padding: 0 10px 0 10px
+        padding: 0 1rem 0 1rem
         cursor: pointer
         color: $base1
+h1
+  font-weight: 700
+  font-size: 1.7rem
+  color: $base0
+  padding: 1rem 0 0 0
+  margin: 0
+h2
+  font-weight: 300
+  font-size: 1.4em
+  color: $base1
+  padding: 1rem 0 0 0
+  margin: 0
+h3
+  font-weight: 300
+  font-size: 1.1em
+  color: $base1
+  padding: 1rem 0 0 0
+  margin: 0
 
 .clear
   clear: both
