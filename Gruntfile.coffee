@@ -46,6 +46,8 @@ module.exports = (grunt) ->
 
     coffee:
       dist:
+        options:
+          bare: true
         files:[
           expand:true
           cwd : 'src'

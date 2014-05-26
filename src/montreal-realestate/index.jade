@@ -1,10 +1,14 @@
 extends ../layouts/wrapper
 
+block meta
+  title Exploring Montreal Real Estate
+
 block scripts
   script(src="/vendor/d3.min.js")
   script(src="/vendor/topojson.v1.min.js")
   script(src="/vendor/colorbrewer.js")
   script(src="/vendor/leaflet.js")
+  script(src="scripts/events.js")
   script(src="scripts/map.js")
 
 block styles
@@ -13,25 +17,33 @@ block styles
 
 block body
   #top.main-container.center
-    h1.no-padding Mapping Montreal Real Estate
-    h3.no-padding Exploring data from the Canadian Real Estate Association
+    h1.no-padding Exploring Montreal Real Estate
+    h3.no-padding Mapping properties for sale across the Montreal Region in May 2014
 
   .above-map-spacer
   #map
   .below-map-spacer
   #bottom.main-container
-    .option.ib
-      .img.ib
-      .desc.ib.clear This is the item
-    .option.ib
-      .img.ib
-      .desc.ib.clear This is the item with a really long text thing going on
-    .option.ib
-      .img.ib
-      .desc.ib.clear This is the item
+    .dataOption.ib.active(data-id="avg_price")
+      img.ib(src="assets/montreal.avg.price.jpg")
+      .desc.ib Average property price
+      .clear
+    .dataOption.ib(data-id="pp_foot")
+      img.ib(src="assets/montreal.pp.foot.jpg")
+      .desc.ib Average price per square foot
+      .clear
 
 
-  #popover.shadow
+  #popover.shadow.rounded-corners
     .popover-content
       .title This is the title
-      .body Here is some info
+      .body
+        .data-line
+          #dataTitle.table-title
+          #dataValue.table-value
+          .clear
+        .data-hline
+        .data-line
+          .table-title Data Points
+          #dataPoints.table-value
+          .clear

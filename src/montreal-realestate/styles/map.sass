@@ -1,3 +1,8 @@
+$base0: #333333
+$base1: #666666
+$base2: #999999
+$base3: #bbbbbb
+
 .main-container
   padding: 0.5rem
 
@@ -16,40 +21,73 @@
     .land
       opacity: 0.5
     .land:hover
+      stroke-width: 2
       stroke: black
 
-$optionHeight: 3em
-
+$optionHeight: 3rem
+$transitionTime: 0.4s
 #bottom
-  .option
+  .dataOption
+    color: $base2
     cursor: pointer
-    .img
-      height: 100%
+    height: $optionHeight
+    padding-left: 2rem
+    img
+      opacity: 0.2
+      height: $optionHeight
       width: $optionHeight
-      border: 1px solid #000
+      border: 1px solid $base2
+      -webkit-transition: opacity $transitionTime
+      transition: opacity $transitionTime
     .desc
-      vertical-align: top
+      color: inherit
+      vertical-align: middle
       max-width: 15rem
       padding: 0.5rem
-    height: $optionHeight
+      height: $optionHeight
+      line-height: 0.5em
+    &.active
+      cursor: auto
+      color: $base0
+      img
+        opacity: 1
+        border: 1px solid $base0
+        -webkit-transition: opacity $transitionTime
+        transition: opacity $transitionTime
+    &:hover:not(.active)
+      color: $base1
+      img
+        opacity: 1
+        border: 1px solid $base1
+        -webkit-transition: opacity $transitionTime
+        transition: opacity $transitionTime
 
-
+$popoverWidth: 14rem
 #popover
   display: none
-  opacity: 0
   position: absolute
   top: 0
   left: 0
-  width: 200px
-  height: 150px
-  background-color: rgba(255,255,255,0.8)
+  width: $popoverWidth
+  background-color: rgba(255,255,255,0.9)
+  border: 1px solid #bbb
   .popover-content
-    width: 100%
-    height: 100%
-    padding: 10px
+    width: $popoverWidth - 1rem
+    padding: 0.5rem
     .title
       font-weight: 700
       text-align: center
-      font-size: 1em
+      font-size: 0.8rem
     .body
-      font-size: 0.8em
+      padding: 0.5rem 0 0 0
+      font-size: 0.8rem
+      width: 100%
+      .data-hline
+        height: 1px
+        background-color: #aaa
+      .data-line
+        width: 100%
+        .table-title
+          float: left
+        .table-value
+          float: right
