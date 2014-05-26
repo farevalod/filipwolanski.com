@@ -10,6 +10,8 @@ from shapely.geometry import shape, Point
 with open('montreal.json', 'r') as f:
     js = json.load(f)
 
+
+js['features'] = [x for x in js['features'] if x['geometry'] != None]
 # create an array of polygons for each sector
 polygons = []
 for feature in js['features']:

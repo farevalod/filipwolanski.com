@@ -24,14 +24,28 @@ block body
   #map
   .below-map-spacer
   #bottom.main-container
-    .dataOption.ib.active(data-id="avg_price")
-      img.ib(src="assets/montreal.avg.price.jpg")
-      .desc.ib Average property price
-      .clear
-    .dataOption.ib(data-id="pp_foot")
-      img.ib(src="assets/montreal.pp.foot.jpg")
-      .desc.ib Average price per square foot
-      .clear
+    .ib.cat(style="vertical-align:top")
+      .heading Data
+      .heading-spacer
+      .dataOption.ib.active(data-id="avg_price")
+        img.ib(src="assets/montreal.avg.price.jpg")
+        .desc.ib Average property price
+        .clear
+      .dataOption.ib(data-id="pp_foot")
+        img.ib(src="assets/montreal.pp.foot.jpg")
+        .desc.ib Average price per square foot
+        .clear
+    .ib.cat
+      .heading Filter
+      .heading-spacer
+      .filterOption.ib.active(data-id="avg_price")
+        .icon.ib
+          i.fa.fa-home
+        .desc.ib Average property price
+        .clear
+      .filterOption.ib(data-id="pp_foot")
+        .desc.ib Average price per square foot
+        .clear
 
 
   #popover.shadow.rounded-corners

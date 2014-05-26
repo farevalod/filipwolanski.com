@@ -27,11 +27,23 @@ $base3: #bbbbbb
 $optionHeight: 3rem
 $transitionTime: 0.4s
 #bottom
-  .dataOption
-    color: $base2
+  height: 6rem
+  .cat
+    padding-left: 2rem
+  .heading
+    color: $base0
+    height: 2rem
+  .heading-spacer
+    margin-bottom: 0.5rem
+    margin-top: -0.5rem
+    background-color: $base0
+    height: 1px
+    width: 10rem
+
+  .dataOption, .filterOption
+    color: $base3
     cursor: pointer
     height: $optionHeight
-    padding-left: 2rem
     img
       opacity: 0.2
       height: $optionHeight
@@ -39,6 +51,14 @@ $transitionTime: 0.4s
       border: 1px solid $base2
       -webkit-transition: opacity $transitionTime
       transition: opacity $transitionTime
+    .icon
+      border: 1px solid $base2
+      width: $optionHeight
+      height: $optionHeight
+      text-align: center
+      i
+        margin-top: 0.25rem
+        font-size: $optionHeight - 0.5rem
     .desc
       color: inherit
       vertical-align: middle

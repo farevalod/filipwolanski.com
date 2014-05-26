@@ -20,7 +20,7 @@ resize = ->
   $("#map").css "height", (window.innerHeight - topHeight - bottomHeight - 2) + "px"
 
 window.onresize = resize
-resize()
+$(document).ready resize
 
 $(".dataOption").click (e)->
   opt = $(e.currentTarget)
