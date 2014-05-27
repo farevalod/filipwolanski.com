@@ -24,33 +24,37 @@ block body
   #map
   .below-map-spacer
   #bottom.main-container
-    .ib.cat(style="vertical-align:top")
-      .heading Data
-      .heading-spacer
-      .dataOption.ib.active(data-id="avg_price")
-        img.ib(src="assets/montreal.avg.price.jpg")
-        .desc.ib Average property price
-        .clear
-      .dataOption.ib(data-id="pp_foot")
-        img.ib(src="assets/montreal.pp.foot.jpg")
-        .desc.ib Average price per square foot
-        .clear
-    .ib.cat
-      .heading Filter
-      .heading-spacer
-      .filterOption.ib.active(data-id="avg_price")
+    .heading.ib Explore
+    .dataOption.ib.active(data-id="avg_price")
+      img.ib(src="assets/montreal.avg.price.jpg")
+      .desc.ib Number of properties for sale
+      .clear
+    .dataOption.ib(data-id="avg_price")
+      img.ib(src="assets/montreal.avg.price.jpg")
+      .desc.ib Average property price
+      .clear
+    .dataOption.ib(data-id="pp_foot")
+      img.ib(src="assets/montreal.pp.foot.jpg")
+      .desc.ib Average price per square foot
+      .clear
+    .right
+      .filterOption.active(data-id="avg_price")
         .icon.ib
           i.fa.fa-home
-        .desc.ib Average property price
+        .desc.ib Residential
         .clear
-      .filterOption.ib(data-id="pp_foot")
-        .desc.ib Average price per square foot
+      .filterOption.active(data-id="pp_foot")
+        .icon.ib
+          i.fa.fa-building
+        .desc.ib Condominiums
         .clear
+    .clear
 
 
   #popover.shadow.rounded-corners
     .popover-content
       .title This is the title
+      .subtitle This is the title
       .body
         .data-line
           #dataTitle.table-title
@@ -58,6 +62,6 @@ block body
           .clear
         .data-hline
         .data-line
-          .table-title Data Points
+          .table-title No. of Properties
           #dataPoints.table-value
           .clear

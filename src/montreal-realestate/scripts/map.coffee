@@ -33,7 +33,8 @@ drawPopover = (opt, d) ->
   $("#popover").css
     top: (mouse.y + mouse.scrollTop + 50 ) + 'px'
     left: (mouse.x - 100) + 'px'
-  $("#popover .title").text d.properties.REGION
+  $("#popover .title").text d.properties.CSDNAME
+  $("#popover .subtitle").text "Census #" + d.properties.DAUID
   $("#dataTitle").text opt.title
   $("#dataValue").text "$" + d.properties[opt.feature].formatPrice(2, 3)
   $("#dataPoints").text d.properties[opt.count_feature]
@@ -41,7 +42,6 @@ drawPopover = (opt, d) ->
 colorMap = (feature, cols) ->
   colors = createColors data, feature, cols
   d3.selectAll "path"
-    .transition().duration 400
     .style "fill", (d)->
       price = parseFloat d.properties[feature]
       if price  > 0 then colors price else "#ffffff"

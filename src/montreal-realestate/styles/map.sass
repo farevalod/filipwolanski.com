@@ -27,20 +27,18 @@ $base3: #bbbbbb
 $optionHeight: 3rem
 $transitionTime: 0.4s
 #bottom
-  height: 6rem
+  height: $optionHeight
+  padding: 1rem
   .cat
     padding-left: 2rem
   .heading
     color: $base0
-    height: 2rem
-  .heading-spacer
-    margin-bottom: 0.5rem
-    margin-top: -0.5rem
-    background-color: $base0
-    height: 1px
-    width: 10rem
-
-  .dataOption, .filterOption
+    font-size: 1.2rem
+    height: $optionHeight
+    vertical-align: middle
+    padding-right: 1rem
+    line-height: 0.5rem
+  .dataOption
     color: $base3
     cursor: pointer
     height: $optionHeight
@@ -52,20 +50,20 @@ $transitionTime: 0.4s
       -webkit-transition: opacity $transitionTime
       transition: opacity $transitionTime
     .icon
-      border: 1px solid $base2
       width: $optionHeight
       height: $optionHeight
       text-align: center
       i
         margin-top: 0.25rem
-        font-size: $optionHeight - 0.5rem
+        font-size: $optionHeight /2
     .desc
+      vertical-align: top
       color: inherit
-      vertical-align: middle
-      max-width: 15rem
+      max-width: 5rem
       padding: 0.5rem
       height: $optionHeight
-      line-height: 0.5em
+      font-size: 0.9rem
+      margin-top: -0.7rem
     &.active
       cursor: auto
       color: $base0
@@ -82,6 +80,21 @@ $transitionTime: 0.4s
         -webkit-transition: opacity $transitionTime
         transition: opacity $transitionTime
 
+  .filterOption
+    color: $base0
+    cursor: pointer
+    opacity: 0.3
+    height: $optionHeight/2
+    transition: opacity $transitionTime
+    .icon
+      padding-right: 0.8rem
+    &.active
+      opacity: 1
+    &:hover:not(.active)
+      opacity: 1
+    &.active:hover
+      opacity: 0.5
+
 $popoverWidth: 14rem
 #popover
   display: none
@@ -96,6 +109,10 @@ $popoverWidth: 14rem
     padding: 0.5rem
     .title
       font-weight: 700
+      text-align: center
+      font-size: 0.8rem
+    .subtitle
+      font-weight: 300
       text-align: center
       font-size: 0.8rem
     .body
