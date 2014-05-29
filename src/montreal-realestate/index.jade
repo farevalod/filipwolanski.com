@@ -16,45 +16,60 @@ block styles
   link(rel="stylesheet", href="/vendor/leaflet.css")
 
 block body
-  #top.main-container.center
-    h1.no-padding Exploring Montreal Real Estate
-    h3.no-padding Mapping properties for sale across the Montreal Region in May 2014
-
-  .above-map-spacer
   #map
-  .below-map-spacer
-  #bottom.main-container
-    .heading.ib Explore
-    .dataOption.ib.active(data-id="avg_price")
-      img.ib(src="assets/montreal.avg.price.jpg")
-      .desc.ib Number of properties for sale
-      .clear
-    .dataOption.ib(data-id="avg_price")
-      img.ib(src="assets/montreal.avg.price.jpg")
-      .desc.ib Average property price
-      .clear
-    .dataOption.ib(data-id="pp_foot")
-      img.ib(src="assets/montreal.pp.foot.jpg")
-      .desc.ib Average price per square foot
-      .clear
-    .right.nopadding
-      .filterOption.active(data-id="avg_price")
-        .icon.ib
-          i.fa.fa-home
-        .desc.ib Homes
-        .clear
-      .filterOption.active(data-id="pp_foot")
-        .icon.ib.town
-          i.fa.fa-home
-          i.fa.fa-home.second
-        .desc.ib.second Townhouses
-        .clear
-      .filterOption.active(data-id="pp_foot")
-        .icon.ib
-          i.fa.fa-building
-        .desc.ib Condominiums
-        .clear
-    .clear
+  .main-container
+    #top.main-container.center.shadow.rounded-corners
+      h1 Exploring Montreal Real Estate
+      h2 Residential properties for sale in May 2014
+
+      .top-spacer
+
+      .data-container
+        .dataOption.active(data-id="avg_price")
+          img.ib(src="assets/montreal.avg.price.jpg")
+          .desc.ib Number of properties for sale
+          .clear
+        .dataOption(data-id="avg_price")
+          img.ib(src="assets/montreal.avg.price.jpg")
+          .desc.ib Average property price
+          .clear
+        .dataOption(data-id="pp_foot")
+          img.ib(src="assets/montreal.pp.foot.jpg")
+          .desc.ib Average price per square foot
+          .clear
+
+  //-#bottom.main-container
+    //-.heading.ib Explore
+    //-.dataOption.ib.active(data-id="avg_price")
+      //-img.ib(src="assets/montreal.avg.price.jpg")
+      //-.desc.ib Number of properties for sale
+      //-.clear
+    //-.dataOption.ib(data-id="avg_price")
+      //-img.ib(src="assets/montreal.avg.price.jpg")
+      //-.desc.ib Average property price
+      //-.clear
+    //-.dataOption.ib(data-id="pp_foot")
+      //-img.ib(src="assets/montreal.pp.foot.jpg")
+      //-.desc.ib Average price per square foot
+      //-.clear
+    //-.right.nopadding
+      //-.filterOption.active(data-id="avg_price")
+        //-.icon.ib
+          //-i.fa.fa-home
+        //-.desc.ib Homes
+        //-.clear
+      //-.filterOption.active(data-id="pp_foot")
+        //-.icon.ib.town
+          //-i.fa.fa-home
+          //-i.fa.fa-home.second
+        //-.desc.ib.second Townhouses
+        //-.clear
+      //-.filterOption.active(data-id="pp_foot")
+        //-.icon.ib
+          //-i.fa.fa-building
+        //-.desc.ib Condominiums
+        //-.clear
+    //-.clear
 
 
   #popover.shadow.rounded-corners

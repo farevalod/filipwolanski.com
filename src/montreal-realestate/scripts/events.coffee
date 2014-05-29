@@ -14,13 +14,17 @@ $(document).mousemove (e) ->
   window.mouse.y = e.clientY or e.pageY
 $(document).scroll (e) -> window.mouse.scrollTop = document.body.scrollTop
 
-resize = ->
-  topHeight = document.getElementById('top').offsetHeight
-  bottomHeight = document.getElementById('bottom').offsetHeight
-  $("#map").css "height", (window.innerHeight - topHeight - bottomHeight - 2) + "px"
+#resize = ->
+  #topHeight = document.getElementById('top').offsetHeight
+  #bottomHeight = document.getElementById('bottom').offsetHeight
+  ##$("#map").css "height", (window.innerHeight - topHeight - bottomHeight - 2) + "px"
+  #$("#top").hide()
+  #$("#bottom").hide()
 
-window.onresize = resize
-$(document).ready resize
+  #map.invalidateSize()
+
+#window.onresize = resize
+#$(document).ready resize
 
 $(".dataOption").click (e)->
   opt = $(e.currentTarget)

@@ -3,20 +3,13 @@ $base1: #666666
 $base2: #999999
 $base3: #bbbbbb
 
-.main-container
-  padding: 0.5rem
-
-.above-map-spacer
-  background-color: #000
-  width: 100%
-  height: 1px
-.below-map-spacer
-  background-color: #000
-  width: 100%
-  height: 1px
 
 #map
+  position: absolute
+  top: 0
+  bottom: 0
   width: 100%
+  height: 100%
   svg
     .land
       opacity: 0.5
@@ -25,63 +18,135 @@ $base3: #bbbbbb
       stroke: black
 
 $optionHeight: 3rem
+$optionWidth: 22rem
 $transitionTime: 0.4s
 $iconTransform: scale(0.9, 1)
 $iconTransformAdjust: -0.35rem
 
-#bottom
-  height: $optionHeight
-  padding: 1rem
-  .cat
-    padding-left: 2rem
-  .heading
-    color: $base0
-    font-size: 1.2rem
+.main-container
+  position: absolute
+  top: 0
+  width: 100%
+
+  #top
+    position: absolute
+    background-color: #fff
+    width: $optionWidth
+    height: 5rem
+    right: 1rem
+    top: 1rem
+
+    h1
+      font-size: 1.2rem
+      padding: 0.5rem 0.5rem 0 0.5rem
+      text-transform: uppercase
+    h2
+      padding: 0 0.5rem
+      font-size: 1rem
+
+    .top-spacer
+      height: 1rem
+      width: 100%
+    .data-container
+      padding: 1rem
+      .dataOption
+        color: $base3
+        cursor: pointer
+        height: $optionHeight
+        width: $optionWidth
+        text-align: left
+        img
+          opacity: 0.2
+          height: $optionHeight
+          width: $optionHeight
+          border: 1px solid $base2
+          -webkit-transition: opacity $transitionTime
+          transition: opacity $transitionTime
+        .icon
+          width: $optionHeight
+          height: $optionHeight
+          text-align: center
+          i
+            margin-top: 0.25rem
+            font-size: $optionHeight /2
+        .desc
+          vertical-align: top
+          color: inherit
+          max-width: $optionWidth - $optionHeight - 1rem
+          padding: 0.5rem
+          height: $optionHeight
+          font-size: 0.9rem
+          margin-top: -0.7rem
+        &.active
+          cursor: auto
+          color: $base0
+          img
+            opacity: 1
+            border: 1px solid $base0
+            -webkit-transition: opacity $transitionTime
+            transition: opacity $transitionTime
+        &:hover:not(.active)
+          color: $base1
+          img
+            opacity: 1
+            border: 1px solid $base1
+            -webkit-transition: opacity $transitionTime
+            transition: opacity $transitionTime
+
+
+  #bottom
     height: $optionHeight
-    vertical-align: middle
-    padding-right: 1rem
-    line-height: 0.5rem
-  .dataOption
-    color: $base3
-    cursor: pointer
-    height: $optionHeight
-    img
-      opacity: 0.2
-      height: $optionHeight
-      width: $optionHeight
-      border: 1px solid $base2
-      -webkit-transition: opacity $transitionTime
-      transition: opacity $transitionTime
-    .icon
-      width: $optionHeight
-      height: $optionHeight
-      text-align: center
-      i
-        margin-top: 0.25rem
-        font-size: $optionHeight /2
-    .desc
-      vertical-align: top
-      color: inherit
-      max-width: 5rem
-      padding: 0.5rem
-      height: $optionHeight
-      font-size: 0.9rem
-      margin-top: -0.7rem
-    &.active
-      cursor: auto
+    padding: 1rem
+    .cat
+      padding-left: 2rem
+    .heading
       color: $base0
+      font-size: 1.2rem
+      height: $optionHeight
+      vertical-align: middle
+      padding-right: 1rem
+      line-height: 0.5rem
+    .dataOption
+      color: $base3
+      cursor: pointer
+      height: $optionHeight
       img
-        opacity: 1
-        border: 1px solid $base0
+        opacity: 0.2
+        height: $optionHeight
+        width: $optionHeight
+        border: 1px solid $base2
         -webkit-transition: opacity $transitionTime
         transition: opacity $transitionTime
-    &:hover:not(.active)
-      color: $base1
-      img
-        opacity: 1
-        border: 1px solid $base1
-        -webkit-transition: opacity $transitionTime
-        transition: opacity $transitionTime
+      .icon
+        width: $optionHeight
+        height: $optionHeight
+        text-align: center
+        i
+          margin-top: 0.25rem
+          font-size: $optionHeight /2
+      .desc
+        vertical-align: top
+        color: inherit
+        max-width: 5rem
+        padding: 0.5rem
+        height: $optionHeight
+        font-size: 0.9rem
+        margin-top: -0.7rem
+      &.active
+        cursor: auto
+        color: $base0
+        img
+          opacity: 1
+          border: 1px solid $base0
+          -webkit-transition: opacity $transitionTime
+          transition: opacity $transitionTime
+      &:hover:not(.active)
+        color: $base1
+        img
+          opacity: 1
+          border: 1px solid $base1
+          -webkit-transition: opacity $transitionTime
+          transition: opacity $transitionTime
 
   .nopadding
     margin-top: -0.5rem
