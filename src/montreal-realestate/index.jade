@@ -37,11 +37,17 @@ block body
       img.ib(src="assets/montreal.pp.foot.jpg")
       .desc.ib Average price per square foot
       .clear
-    .right
+    .right.nopadding
       .filterOption.active(data-id="avg_price")
         .icon.ib
           i.fa.fa-home
-        .desc.ib Residential
+        .desc.ib Homes
+        .clear
+      .filterOption.active(data-id="pp_foot")
+        .icon.ib.town
+          i.fa.fa-home
+          i.fa.fa-home.second
+        .desc.ib.second Townhouses
         .clear
       .filterOption.active(data-id="pp_foot")
         .icon.ib

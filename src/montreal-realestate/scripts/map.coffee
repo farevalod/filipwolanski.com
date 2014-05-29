@@ -4,7 +4,7 @@ findThreshold = (list, size) ->
   sorted[x] for x in [interval..interval*(size-1)] by interval
 
 createColors = (data, feature, cols) ->
-  points =  _.map data.features, (f)-> f.properties[feature]
+  points =  _.map data.features, (f)-> feature f
   withoutZeros = _.reject points, (p)-> p is 0
   threshold = findThreshold withoutZeros, cols.length
   d3.scale.threshold()
@@ -30,28 +30,44 @@ project = (x) ->
 
 drawPopover = (opt, d) ->
   price = parseFloat d.properties.avg_price
-  $("#popover").css
-    top: (mouse.y + mouse.scrollTop + 50 ) + 'px'
-    left: (mouse.x - 100) + 'px'
+  y = (mouse.y + mouse.scrollTop + 50 ) + 'px'
+  x = (mouse.x - 100) + 'px'
+  $("#popover").css 'transform': "translate(#{x},#{y})"
   $("#popover .title").text d.properties.CSDNAME
   $("#popover .subtitle").text "Census #" + d.properties.DAUID
   $("#dataTitle").text opt.title
-  $("#dataValue").text "$" + d.properties[opt.feature].formatPrice(2, 3)
-  $("#dataPoints").text d.properties[opt.count_feature]
+  $("#dataValue").text "$" + opt.feature(d).formatPrice()
+  $("#dataPoints").text opt.count_feature(d)
+  console.log d.properties
 
 colorMap = (feature, cols) ->
   colors = createColors data, feature, cols
   d3.selectAll "path"
     .style "fill", (d)->
-      price = parseFloat d.properties[feature]
+      price = feature d
       if price  > 0 then colors price else "#ffffff"
     .style "opacity", (d) ->
-      price = parseFloat d.properties[feature]
+      price = feature d
       if price  > 0 then 0.5 else 0
 
 renderDataOption = (opt) ->
   colorMap opt.feature, opt.colors
   d3.selectAll("path").on "mousemove", _.partial drawPopover, opt
+
+selected_opts = ['house', 'town', 'condo']
+
+computeValue = (feature, divisor, data) ->
+  features = _.map selected_opts, (s) -> "#{feature}_#{s}"
+  sum = _.reduce features, ( (m, f) ->
+    parseFloat(data.properties[f]) + m
+  ), 0
+  if divisor
+    divisors = _.map selected_opts, (s) -> "#{divisor}_#{s}"
+    div = _.reduce divisors, ( (m, f) ->
+      parseFloat(data.properties[f]) + m
+    ), 0
+    sum/div
+  else sum
 
 
 selectDataOption = (opt) ->
@@ -59,13 +75,13 @@ selectDataOption = (opt) ->
     renderDataOption switch opt
       when "avg_price"
         title : "Average Price"
-        feature: 'avg_price'
-        count_feature: 'data_points'
+        feature: _.partial computeValue, "price", "data_points"
+        count_feature: _.partial computeValue, "data_points", null
         colors: colorbrewer.YlGn[9]
       when "pp_foot"
         title : "Price per square foot"
-        feature: 'pp_foot'
-        count_feature: 'pp_foot_data_points'
+        feature: _.partial computeValue, 'pp_foot', 'pp_foot_points'
+        count_feature: _.partial computeValue, 'pp_foot_points', null
         colors: colorbrewer.PuBu[9]
       else throw "unknown option"
 
