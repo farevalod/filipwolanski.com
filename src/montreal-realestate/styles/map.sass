@@ -39,7 +39,7 @@ $iconTransformAdjust: -0.35rem
 
   #top
     position: absolute
-    background-color: #fff
+    background-color: rgba(247, 247, 247, 0.9)
     width: $optionWidth
     height: $topHeight
     right: 0.5rem
@@ -48,14 +48,17 @@ $iconTransformAdjust: -0.35rem
     +transition(height $transitionTime)
     h1
       font-size: 1.1rem
-      padding: 0.5rem 0.5rem 0 0.5rem
+      padding: 0.5rem 1rem 0 1rem
     h2
-      padding: 0 0.5rem
+      padding: 0 1rem
       font-size: 1rem
 
     .top-spacer
-      height: 1rem
-      width: 100%
+      height: 1px
+      width: $optionWidth - 2rem
+      margin: 0.2rem 1rem
+      background-color: $base3
+
     &:hover
       height: $topHeight + 3*$optionHeight + 4rem
 
