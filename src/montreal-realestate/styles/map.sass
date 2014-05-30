@@ -1,8 +1,15 @@
+@import ../../styles/mixins.sass
+
 $base0: #333333
 $base1: #666666
 $base2: #999999
 $base3: #bbbbbb
 
+.shadow
+  +box-shadow(0.3rem 0.3rem 0.5rem rgba(0,0,0,0.2))
+
+.rounded-corners
+  +border-radius(0.2rem)
 
 #map
   position: absolute
@@ -17,8 +24,10 @@ $base3: #bbbbbb
       stroke-width: 2
       stroke: black
 
+
 $optionHeight: 3rem
-$optionWidth: 22rem
+$optionWidth: 18rem
+$topHeight: 4rem
 $transitionTime: 0.4s
 $iconTransform: scale(0.9, 1)
 $iconTransformAdjust: -0.35rem
@@ -32,14 +41,14 @@ $iconTransformAdjust: -0.35rem
     position: absolute
     background-color: #fff
     width: $optionWidth
-    height: 5rem
-    right: 1rem
-    top: 1rem
-
+    height: $topHeight
+    right: 0.5rem
+    top: 0.5rem
+    overflow: hidden
+    +transition(height $transitionTime)
     h1
-      font-size: 1.2rem
+      font-size: 1.1rem
       padding: 0.5rem 0.5rem 0 0.5rem
-      text-transform: uppercase
     h2
       padding: 0 0.5rem
       font-size: 1rem
@@ -47,9 +56,13 @@ $iconTransformAdjust: -0.35rem
     .top-spacer
       height: 1rem
       width: 100%
+    &:hover
+      height: $topHeight + 3*$optionHeight + 4rem
+
     .data-container
       padding: 1rem
       .dataOption
+        padding-bottom: 1rem
         color: $base3
         cursor: pointer
         height: $optionHeight
@@ -60,38 +73,26 @@ $iconTransformAdjust: -0.35rem
           height: $optionHeight
           width: $optionHeight
           border: 1px solid $base2
-          -webkit-transition: opacity $transitionTime
-          transition: opacity $transitionTime
-        .icon
-          width: $optionHeight
-          height: $optionHeight
-          text-align: center
-          i
-            margin-top: 0.25rem
-            font-size: $optionHeight /2
+          +transition(opacity $transitionTime)
         .desc
           vertical-align: top
           color: inherit
-          max-width: $optionWidth - $optionHeight - 1rem
+          max-width: $optionWidth - $optionHeight - 3rem
           padding: 0.5rem
           height: $optionHeight
           font-size: 0.9rem
-          margin-top: -0.7rem
+          margin-top: -0.5rem
         &.active
           cursor: auto
           color: $base0
           img
             opacity: 1
             border: 1px solid $base0
-            -webkit-transition: opacity $transitionTime
-            transition: opacity $transitionTime
         &:hover:not(.active)
           color: $base1
           img
             opacity: 1
             border: 1px solid $base1
-            -webkit-transition: opacity $transitionTime
-            transition: opacity $transitionTime
 
 
   #bottom
