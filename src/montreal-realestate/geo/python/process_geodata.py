@@ -3,14 +3,13 @@
 import sys
 import json
 import sqlite3
-from multiprocessing.dummy import Pool as ThreadPool
 from shapely.geometry import shape, Point
 from time import time
 from functools import partial
 
 process_items = ['data_points', 'price', 'pp_foot', 'pp_foot_points']
 process_types = ['house', 'town', 'condo']
-additional_items = ['DAUID', "CSDNAME"]
+additional_items = ['DAUID', "CSDNAME", 'area']
 
 def initialize_data(data):
     for item in process_items:
@@ -56,8 +55,9 @@ def create_polygons(js):
     polygons = []
     for feature in js['features']:
         initialize_data(feature['properties'])
-        polygons.append(shape(feature['geometry']))
-
+        poly = shape(feature['geometry'])
+        polygons.append(poly)
+        feature['properties']['area'] = poly.area*111.12*111.12
     return polygons
 
 def compute_attributes(polygons, c):

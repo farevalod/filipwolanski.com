@@ -1,10 +1,5 @@
 @import ../../styles/mixins.sass
 
-$base0: #333333
-$base1: #666666
-$base2: #999999
-$base3: #bbbbbb
-
 .shadow
   +box-shadow(0.3rem 0.3rem 0.5rem rgba(0,0,0,0.2))
 
@@ -22,15 +17,12 @@ $base3: #bbbbbb
       opacity: 0.5
     .land:hover
       stroke-width: 2
-      stroke: black
+      stroke: $red
 
-
-$optionHeight: 3rem
+$optionHeight: 1rem
 $optionWidth: 18rem
-$topHeight: 4rem
+$topHeight: 15.5rem
 $transitionTime: 0.4s
-$iconTransform: scale(0.9, 1)
-$iconTransformAdjust: -0.35rem
 
 .main-container
   position: absolute
@@ -39,7 +31,7 @@ $iconTransformAdjust: -0.35rem
 
   #top
     position: absolute
-    background-color: rgba(247, 247, 247, 0.9)
+    background-color: $base5
     width: $optionWidth
     height: $topHeight
     right: 0.5rem
@@ -47,11 +39,17 @@ $iconTransformAdjust: -0.35rem
     overflow: hidden
     +transition(height $transitionTime)
     h1
-      font-size: 1.1rem
+      color: $red
+      font-size: 1.05rem
       padding: 0.5rem 1rem 0 1rem
     h2
+      font-weight: 700
+      padding: 0.2rem 1rem
+      font-size: 0.8rem
+    p
       padding: 0 1rem
-      font-size: 1rem
+      font-size: 0.8rem
+      margin: 0
 
     .top-spacer
       height: 1px
@@ -59,124 +57,96 @@ $iconTransformAdjust: -0.35rem
       margin: 0.2rem 1rem
       background-color: $base3
 
+    #legend
+      padding: 0 1rem
+      width: $optionWidth - 2rem
+      height: 7rem
+      .spinner
+        text-align: center
+        margin-top: 3rem
+        margin-left: ($optionWidth/2) - 2rem
+        font-size: 2rem
+        color: $base3
+      .svg-text
+        font-size: 0.7rem
+
+    .more-options
+      text-align: center
+      width: 100%
+      height: 1rem
+      font-weight: 700
+      font-size: 0.8rem
+      color: $base2
+      padding: 0.2rem
+      i
+        margin-top: -0.2rem
     &:hover
-      height: $topHeight + 3*$optionHeight + 4rem
+      height: $topHeight + 6*$optionHeight + 3rem
+      .more-options
+        display: none
+      .data-container
+        display: block
 
     .data-container
-      padding: 1rem
+      display: none
+      padding: 0 1rem
+      .data-title
+        font-weight: 700
+        font-size: 0.8rem
+        color: $base1
+        padding-top: 0.5rem
+        padding-bottom: 0.3rem
       .dataOption
-        padding-bottom: 1rem
         color: $base3
         cursor: pointer
         height: $optionHeight
         width: $optionWidth
         text-align: left
-        img
-          opacity: 0.2
+        .data-color
           height: $optionHeight
           width: $optionHeight
-          border: 1px solid $base2
+          opacity: 0.6
           +transition(opacity $transitionTime)
         .desc
-          vertical-align: top
+          vertical-align: middle
           color: inherit
           max-width: $optionWidth - $optionHeight - 3rem
           padding: 0.5rem
           height: $optionHeight
-          font-size: 0.9rem
+          font-size: 0.7rem
           margin-top: -0.5rem
         &.active
           cursor: auto
           color: $base0
-          img
+          .data-color
             opacity: 1
-            border: 1px solid $base0
         &:hover:not(.active)
-          color: $base1
-          img
+          color: $red
+          .data-color
             opacity: 1
-            border: 1px solid $base1
 
-
-  #bottom
-    height: $optionHeight
-    padding: 1rem
-    .cat
-      padding-left: 2rem
-    .heading
-      color: $base0
-      font-size: 1.2rem
-      height: $optionHeight
-      vertical-align: middle
-      padding-right: 1rem
-      line-height: 0.5rem
-    .dataOption
-      color: $base3
-      cursor: pointer
-      height: $optionHeight
-      img
-        opacity: 0.2
-        height: $optionHeight
-        width: $optionHeight
-        border: 1px solid $base2
-        -webkit-transition: opacity $transitionTime
-        transition: opacity $transitionTime
-      .icon
-        width: $optionHeight
-        height: $optionHeight
-        text-align: center
-        i
-          margin-top: 0.25rem
-          font-size: $optionHeight /2
-      .desc
-        vertical-align: top
-        color: inherit
-        max-width: 5rem
-        padding: 0.5rem
-        height: $optionHeight
-        font-size: 0.9rem
-        margin-top: -0.7rem
-      &.active
-        cursor: auto
-        color: $base0
-        img
-          opacity: 1
-          border: 1px solid $base0
-          -webkit-transition: opacity $transitionTime
-          transition: opacity $transitionTime
-      &:hover:not(.active)
+      .filterOption
         color: $base1
-        img
+        cursor: pointer
+        height: $optionHeight
+        width: $optionWidth
+        transition: opacity $transitionTime
+        .icon
+          visibility: hidden
+          height: $optionHeight
+          font-size: 0.7rem
+        .desc
+          vertical-align: middle
+          color: inherit
+          padding: 0 0.5rem
+          height: $optionHeight
+          font-size: 0.7rem
+        &.active
+          .icon
+            visibility: visible
+        &:hover
+          color: $red
           opacity: 1
-          border: 1px solid $base1
-          -webkit-transition: opacity $transitionTime
-          transition: opacity $transitionTime
-
-  .nopadding
-    margin-top: -0.5rem
-    .filterOption
-      color: $base0
-      cursor: pointer
-      opacity: 0.3
-      height: ($optionHeight + 1)/3
-      transition: opacity $transitionTime
-      .icon
-        padding-right: 0.8rem
-        &.town
-          -webkit-transform: $iconTransform
-          -moz-transform:    $iconTransform
-          -ms-transform:     $iconTransform
-          -o-transform:      $iconTransform
-          transform:         $iconTransform
-          margin-left: $iconTransformAdjust
-      .second
-        margin-left: $iconTransformAdjust
-      &.active
-        opacity: 1
-      &:hover:not(.active)
-        opacity: 1
-      &.active:hover
-        opacity: 0.5
 
 $popoverWidth: 14rem
 #popover
@@ -211,3 +181,7 @@ $popoverWidth: 14rem
           float: left
         .table-value
           float: right
+    .empty
+      text-align: center
+      padding: 0.5rem 0 0 0
+      font-size: 0.8rem

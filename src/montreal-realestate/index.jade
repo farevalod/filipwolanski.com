@@ -18,61 +18,49 @@ block styles
 block body
   #map
   .main-container
-    #top.main-container.shadow.rounded-corners
-      h1.center Exploring Montreal Real Estate
-      .top-spacer
-      h2 May 2014
+    #top.shadow.rounded-corners
+      h1 Exploring Montreal Real Estate
       .top-spacer
       p
-        | This is where I will be writing some text about how this data
-        | was compiled and what I plan to do with it.1
+        | This map shows the data gathered from over 40,000 properties up for sale in
+        | the Greater Montreal area in May 2014.
+      h2
+      #legend
+        i.fa.fa-spinner.fa-spin.spinner
+        svg#legendSVG
+      .more-options
+        i.fa.fa-chevron-down
 
       .data-container
-        .dataOption.active(data-id="avg_price")
-          img.ib(src="assets/montreal.avg.price.jpg")
-          .desc.ib Number of properties for sale
+        .data-title Map the following data
+        .dataOption.active(data-id="data_points")
+          .ib.data-color
+          .desc.ib Properties for sale per sq.km.
           .clear
         .dataOption(data-id="avg_price")
-          img.ib(src="assets/montreal.avg.price.jpg")
+          .ib.data-color
           .desc.ib Average property price
           .clear
         .dataOption(data-id="pp_foot")
-          img.ib(src="assets/montreal.pp.foot.jpg")
+          .ib.data-color
           .desc.ib Average price per square foot
           .clear
-
-  //-#bottom.main-container
-    //-.heading.ib Explore
-    //-.dataOption.ib.active(data-id="avg_price")
-      //-img.ib(src="assets/montreal.avg.price.jpg")
-      //-.desc.ib Number of properties for sale
-      //-.clear
-    //-.dataOption.ib(data-id="avg_price")
-      //-img.ib(src="assets/montreal.avg.price.jpg")
-      //-.desc.ib Average property price
-      //-.clear
-    //-.dataOption.ib(data-id="pp_foot")
-      //-img.ib(src="assets/montreal.pp.foot.jpg")
-      //-.desc.ib Average price per square foot
-      //-.clear
-    //-.right.nopadding
-      //-.filterOption.active(data-id="avg_price")
-        //-.icon.ib
-          //-i.fa.fa-home
-        //-.desc.ib Homes
-        //-.clear
-      //-.filterOption.active(data-id="pp_foot")
-        //-.icon.ib.town
-          //-i.fa.fa-home
-          //-i.fa.fa-home.second
-        //-.desc.ib.second Townhouses
-        //-.clear
-      //-.filterOption.active(data-id="pp_foot")
-        //-.icon.ib
-          //-i.fa.fa-building
-        //-.desc.ib Condominiums
-        //-.clear
-    //-.clear
+        .data-title Filter by property type
+        .filterOption.active(data-id="house")
+          .icon.ib
+            i.fa.fa-check
+          .desc.ib Homes
+          .clear
+        .filterOption.active(data-id="town")
+          .icon.ib.town
+            i.fa.fa-check
+          .desc.ib.second Townhouses
+          .clear
+        .filterOption.active(data-id="condo")
+          .icon.ib
+            i.fa.fa-check
+          .desc.ib Condominiums
+          .clear
 
 
   #popover.shadow.rounded-corners
@@ -84,8 +72,9 @@ block body
           #dataTitle.table-title
           #dataValue.table-value
           .clear
-        .data-hline
-        .data-line
+        .data-hline.data-hide-field
+        .data-line.data-hide-field
           .table-title No. of Properties
           #dataPoints.table-value
           .clear
+      .empty There is no data for this region

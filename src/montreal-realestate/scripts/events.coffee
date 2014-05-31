@@ -25,6 +25,19 @@ $(document).scroll (e) -> window.mouse.scrollTop = document.body.scrollTop
 
 #window.onresize = resize
 #$(document).ready resize
+$(".filterOption").click (e)->
+  $(e.currentTarget).toggleClass 'active'
+  options = []
+  $(".filterOption").each (idx, el) ->
+    if $(el).hasClass 'active' then options.push $(el).attr 'data-id'
+  unless options.length
+    ct = $(e.currentTarget)
+    $(".filterOption").each (idx, el) ->
+      unless $(el).attr('data-id') is ct.attr('data-id')
+        $(el).addClass 'active'
+        options.push $(el).attr 'data-id'
+  window.selected_opts = options
+  selectDataOption window.selected_data
 
 $(".dataOption").click (e)->
   opt = $(e.currentTarget)
