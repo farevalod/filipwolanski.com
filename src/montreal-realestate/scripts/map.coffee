@@ -204,7 +204,7 @@ map = L.map 'map'
   .setView loc, 11
   .setMaxBounds bnds
 L.tileLayer  'http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png',
-#L.tileLayer  'http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png',
+# L.tileLayer  'http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png',
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>',
     minZoom: 10
   .addTo(map)
