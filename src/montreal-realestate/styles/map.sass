@@ -47,6 +47,7 @@ $transitionTime: 0.4s
       font-weight: 700
       padding: 0.2rem 1rem
       font-size: 0.8rem
+      height: 1rem
     p
       padding: 0 1rem
       font-size: 0.8rem
@@ -82,12 +83,6 @@ $transitionTime: 0.4s
       padding: 0.2rem
       i
         margin-top: -0.2rem
-    // &:hover
-    //   height: $topHeight + 6*$optionHeight + 3rem
-    //   .more-options
-    //     display: none
-    //   .data-container
-    //     display: block
 
     .data-container
       padding: 0 1rem
@@ -98,7 +93,6 @@ $transitionTime: 0.4s
         padding-top: 0.5rem
         padding-bottom: 0.3rem
       .dataOption
-        color: $base3
         cursor: pointer
         height: $optionHeight
         width: $optionWidth
@@ -106,7 +100,7 @@ $transitionTime: 0.4s
         .data-color
           height: $optionHeight
           width: $optionHeight
-          opacity: 0.6
+          opacity: 0.8
           +transition(opacity $transitionTime)
         .desc
           vertical-align: middle
@@ -117,10 +111,7 @@ $transitionTime: 0.4s
           font-size: 0.7rem
           margin-top: -0.5rem
         &.active
-          cursor: auto
-          color: $base0
-          .data-color
-            opacity: 1
+          display: none
         &:hover:not(.active)
           color: $red
           .data-color
@@ -147,7 +138,6 @@ $transitionTime: 0.4s
             visibility: visible
         &:hover
           color: $red
-          opacity: 1
 
 $popoverWidth: 14rem
 #popover
