@@ -1,3 +1,7 @@
+# sitemap generator
+sm = require 'sitemap'
+fs = require 'fs'
+
 # list of the pages to be included in the site
 pages = ["montreal-realestate"]
 
@@ -10,6 +14,13 @@ files =
 for page in pages
   for filetype, list of files
     list.push "#{page}/#{list[0]}"
+
+# create the sitemap
+urls = [''].concat(pages).map (v) -> url: if v.length then "/#{v}/" else "/#{v}"
+sitemap = sm.createSitemap
+  hostname: 'http://filipwolanski.com'
+  cacheTime: 600000
+  urls: urls
 
 module.exports = (grunt) ->
 
@@ -83,11 +94,15 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
 
+  grunt.registerTask "sitemap", "Create the sitemap", ->
+    grunt.log.writeln 'Writing the sitemap...'
+    fs.writeFile 'public/sitemap.xml', sitemap.toString()
   grunt.registerTask "default", [
       "sass:dist"
       "copy:dist"
       "jade:dist"
       "coffee:dist"
+      "sitemap"
       "connect"
       "watch"
     ]
