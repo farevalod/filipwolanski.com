@@ -1,0 +1,21 @@
+@font-face {
+    font-family: 'fira';
+    src: url('firasans-bold-webfont.eot');
+    src: url('firasans-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('firasans-bold-webfont.woff') format('woff'),
+         url('firasans-bold-webfont.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'fira';
+    src: url('firasans-light-webfont.eot');
+    src: url('firasans-light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('firasans-light-webfont.woff') format('woff'),
+         url('firasans-light-webfont.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+
+}

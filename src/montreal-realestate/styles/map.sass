@@ -1,10 +1,22 @@
 @import ../../styles/mixins.sass
 
+$optionHeight: 1rem
+$optionWidth: 18rem
+$topHeight: 17rem
+$transitionTime: 0.4s
+
 @media (max-device-width: 480px)
   html
     font-size: 10px
 
+    .main-container
+      #top
+        height: 2.3rem
+        &:hover
+          height: $topHeight + 6*$optionHeight + 3rem
 
+html
+  font-size: 18px
 
 .shadow
   +box-shadow(0.3rem 0.3rem 0.5rem rgba(0,0,0,0.2))
@@ -25,10 +37,6 @@
       stroke-width: 2
       stroke: $red
 
-$optionHeight: 1rem
-$optionWidth: 18rem
-$topHeight: 15.5rem
-$transitionTime: 0.4s
 
 .main-container
   position: absolute
@@ -36,6 +44,7 @@ $transitionTime: 0.4s
   width: 100%
 
   #top
+    border: 1px solid $base3
     position: absolute
     background-color: $base5
     width: $optionWidth
@@ -45,10 +54,17 @@ $transitionTime: 0.4s
     top: 0.5rem
     overflow: hidden
     // +transition(height $transitionTime)
-    h1
-      color: $red
-      font-size: 1.05rem
-      padding: 0.5rem 1rem 0 1rem
+    .top-spacer
+      height: 2.2rem
+      width: $optionWidth
+      border-bottom: 1px solid $base3
+      background-color: #F5F1EE
+      margin-bottom: 0.5rem
+      h1
+        text-align: center
+        color: $red
+        font-size: 1.05rem
+        padding: 0.5rem 1rem 0 1rem
     h2
       font-weight: 700
       padding: 0.2rem 1rem
@@ -59,11 +75,6 @@ $transitionTime: 0.4s
       font-size: 0.8rem
       margin: 0
 
-    .top-spacer
-      height: 1px
-      width: $optionWidth - 2rem
-      margin: 0.2rem 1rem
-      background-color: $base3
 
     #legend
       padding: 0 1rem
@@ -89,6 +100,21 @@ $transitionTime: 0.4s
       padding: 0.2rem
       i
         margin-top: -0.2rem
+
+    .social-spacer
+      height: 1px
+      width: $optionWidth - 2rem
+      margin: 0.5rem 1rem 0 1rem
+    .social-container
+      border-top: 1px solid $base3
+      padding: 0.5rem 1rem
+      background-color: #F5F1EE
+      height: 3rem
+      .social-button
+        padding-right: 1rem
+        vertical-align: top
+        &.twitter
+          margin-top: 0.1rem
 
     .data-container
       padding: 0 1rem
@@ -116,8 +142,8 @@ $transitionTime: 0.4s
           height: $optionHeight
           font-size: 0.7rem
           margin-top: -0.5rem
-        &.active
-          display: none
+        // &.active
+        //   display: none
         &:hover:not(.active)
           color: $red
           .data-color
@@ -145,7 +171,7 @@ $transitionTime: 0.4s
         &:hover
           color: $red
 
-$popoverWidth: 14rem
+$popoverWidth: 16rem
 #popover
   display: none
   position: absolute

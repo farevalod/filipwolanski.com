@@ -10,28 +10,41 @@ html.no-js
 
     link(rel="icon",type="image/png",href="/favicon.png")
 
-    link(href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,700', rel='stylesheet')
     link(rel='stylesheet', href='/vendor/normalize.css')
     link(rel='stylesheet', href='/vendor/font-awesome/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/vendor/fira/fonts.css')
     link(rel='stylesheet', href='/styles/helpers.css')
     link(rel='stylesheet', href='/styles/main.css')
 
     block styles
     //-script(src='js/vendor/modernizr-2.7.1.min.js')
   body
-    <!--[if lt IE 8]>
+    <!--[if lt IE 9]>
     p.browsehappy
       | You are using an <strong>outdated</strong> browser.
       | Please <a href="http://browsehappy.com/">upgrade your browser</a>
       | to improve your experience.
     <![endif]-->
 
-    //- Add the site or application content here
+    .fb-root
+    script.
+      (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=229402287269401&version=v2.0";
+      fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    script.
+      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
     block body
 
     script(src="/vendor/jquery-2.1.1.min.js")
     script(src="/vendor/underscore-min.js")
+
     block scripts
+
     script.
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

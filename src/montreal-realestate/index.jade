@@ -20,8 +20,8 @@ block body
   #map
   .main-container
     #top.shadow.rounded-corners
-      h1 Exploring Montreal Real Estate
       .top-spacer
+        h1 Exploring Montreal Real Estate
       p
         | This map shows the data gathered from over 40,000 properties up for sale in
         | the Greater Montreal area in May 2014.
@@ -61,6 +61,15 @@ block body
           .desc.ib Condominiums
           .clear
 
+      .social-spacer
+      .social-container
+        .social-button.ib
+          .fb-like(data-href="http://filipwolanski.com/montreal-realestate/", data-layout="button",
+            data-action="like", data-width="30", data-show-faces="false", data-share="true")
+        .social-button.ib.twitter
+          a.twitter-share-button(href="https://twitter.com/share",
+            data-url="http://filipwolanski.com/montreal-realestate/",
+            data-count="none")
 
   #popover.shadow.rounded-corners
     .popover-content
