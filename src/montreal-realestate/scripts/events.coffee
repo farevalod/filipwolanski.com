@@ -45,3 +45,5 @@ $(".dataOption").click (e)->
   opt.addClass "active"
   selectDataOption opt.attr 'data-id'
 
+$("#top h1").click (e) ->
+  $("#top").toggleClass 'open'

@@ -2,17 +2,17 @@
 
 $optionHeight: 1rem
 $optionWidth: 18rem
-$topHeight: 17rem
+$topHeight: 18rem
 $transitionTime: 0.4s
 
-@media (max-device-width: 480px)
+@media (max-width: $optionWidth * 3)
   html
     font-size: 10px
 
     .main-container
       #top
         height: 2.3rem
-        &:hover
+        &.open
           height: $topHeight + 6*$optionHeight + 3rem
 
 html
@@ -71,6 +71,7 @@ html
       font-size: 0.8rem
       height: 1rem
     p
+      line-height: 1rem
       padding: 0 1rem
       font-size: 0.8rem
       margin: 0
@@ -114,7 +115,7 @@ html
         padding-right: 1rem
         vertical-align: top
         &.twitter
-          margin-top: 0.1rem
+          margin-top: 0.4rem
 
     .data-container
       padding: 0 1rem
@@ -122,8 +123,10 @@ html
         font-weight: 700
         font-size: 0.8rem
         color: $base1
-        padding-top: 0.5rem
+        padding-top: 0.3rem
         padding-bottom: 0.3rem
+        &.filter
+          padding-bottom: 0
       .dataOption
         cursor: pointer
         height: $optionHeight
