@@ -3,7 +3,10 @@ sm = require 'sitemap'
 fs = require 'fs'
 
 # list of the pages to be included in the site
-pages = ["montreal-realestate"]
+pages = [
+  "montreal-realestate"
+  # "french-english-vocabulary"
+]
 
 files =
   sass : ['styles/*.sass']

@@ -1,0 +1,33 @@
+{
+ :english
+ [{"Jane Austen"
+   {:books
+    [{:title "Pride and Prejudice"
+     :id 1342}
+    ]}
+   "Mark Twain"
+   {:books
+    [{:title "The Adventures of Huckleberry Finn"
+     :id 76 }
+
+    {:title "The Adventures of Tom Sawyer"
+     :id 74 }
+
+    {:title "Life On The Mississippi"
+     :id 245 }
+    ]}
+   }
+  ]
+
+ :french
+ [{"Victor Hugo"
+   {:books
+    [{:title "Notre-Dame de Paris"
+     :id  19657
+     :encoding "ISO-8859-1"}
+    ]}
+   }
+  ]
+ }
+
+
