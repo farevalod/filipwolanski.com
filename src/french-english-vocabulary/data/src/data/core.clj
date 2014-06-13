@@ -8,60 +8,70 @@
            com.atlascopco.hunspell.Hunspell)
   (:gen-class))
 
-(def output-file "words.json")
-(def in-file "texts.edn")
-(def http-agent "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36")
-(def gutenberg-mirror "http://library.beau.org/gutenberg/")
 
 
-
-(def text-directory "texts/")
-(def folders {:english (str text-directory "english/")
-              :french (str text-directory "french/")})
+;; tokenization and counting
 
 (def tokenizers
   {:english (make-tokenizer "models/en-token.bin")
    :french (make-tokenizer "models/fr-token.bin")})
 
 (def stemmers
-  {:english (Hunspell. "texts/english.dic" "texts/french.aff")
-   :french (Hunspell. "texts/french.dic" "texts/french.aff")})
+  {:english (Hunspell. "models/en.dic" "models/en.aff")
+   :french (Hunspell. "models/fr.dic" "models/fr.aff")})
 
-;; tokenization and counting
-(defn remove-non-letters [s]
-  (clojure.string/replace (clojure.string/lower-case  s) #"[^[:alpha:]]" ""))
+(defn remove-punctuation [s]
+  (let [ lower-s (clojure.string/lower-case s) ]
+    (clojure.string/replace lower-s #"[^a-z']" "")))
+
 
 (defn split-hyphenation [s]
     (clojure.string/split s #"-"))
 
 (defn tokenize [text lang]
   (remove empty?
-          (map remove-non-letters
+          (map remove-punctuation
                (mapcat split-hyphenation ((lang tokenizers) text)))))
 
 (defn stem-and-unique [s lang]
   (distinct (map #(let [stem (.stem (lang stemmers) %)]
-                    (if (empty? stem) % (first stem))) s)))
+                    (if (empty? stem) % (apply min-key count stem))) s)))
 
-(defn process-file [file]
-  (let [ lang (:lang file)
-         text (slurp (:file file))
-         tokens (tokenize text lang)]
-    (conj (dissoc file :file) {:unique (distinct tokens)
-                :unique-stems (stem-and-unique tokens lang)
-                :word-count (count tokens) })))
+; (apply min-key count (.stem (:english stemmers) "was" ))
+
+
+;; gutenberg scaping to cache folder
+
+(def cache-folder ".cache/")
+(def gutenberg-mirror "http://library.beau.org/gutenberg/")
+(def gutenberg-filter-regex #"[\*]+\s*(START|END) OF THIS PROJECT GUTENBERG.*")
 
 (defn num-to-url [n alt]
   (str (apply str (interpose "/"
                              (into [] (subs (str n) 0 (dec (.length (str n))) ))))
        "/" (str n) "/" (str n) (if alt ".txt" "-8.txt")))
 
+(defn clean-text [text]
+  (let [split (clojure.string/split text gutenberg-filter-regex)]
+    (apply max-key count split)))
+
 (defn download-book [id encoding]
-  (try
-    (:body (client/get (str gutenberg-mirror (num-to-url id true))
-                       {:as encoding}))
-    (catch Exception e (:body (client/get (str gutenberg-mirror (num-to-url id false))
-                                          {:as encoding})))))
+  (let [filename (str cache-folder id ".txt")]
+    (do
+      (if (not (.exists (clojure.java.io/as-file cache-folder)))
+        (.mkdir (java.io.File. cache-folder)))
+      (if (not (.exists (clojure.java.io/as-file filename)))
+        (spit filename  (try
+                          (:body (client/get (str gutenberg-mirror (num-to-url id true))
+                                             {:as encoding}))
+                          (catch Exception e (:body (client/get (str gutenberg-mirror (num-to-url id false))
+                                                                {:as encoding}))))))
+      (clean-text (slurp filename)))))
+
+;; processing
+
+(def output-file "words.json")
+(def in-file "texts.edn")
 
 (defn process-book [lang book]
   (let [title (:title book)
@@ -69,15 +79,28 @@
         id (:id book)
         text (download-book id encoding)
         tokens (tokenize text lang)
+        dtokens (distinct tokens)
+        stemmed (stem-and-unique dtokens lang)
         ]
-  (hash-map :title title :word-count (count tokens) ))
-  )
+  (hash-map :title title
+            :word-count (count tokens)
+            :distinct-tokens dtokens
+            :distinct-stems stemmed
+            :distinct-token-count (count dtokens)
+            :distinct-stem-count (count stemmed) )))
 
 (defn read-authors [lang obj]
   (map (fn [[author props]]
-          (let [books (map (partial process-book lang) (:books props))]
-           (hash-map author {:books books})
-            ))
+          (let [books (map (partial process-book lang) (:books props))
+                dtokens (mapcat #(:distinct-tokens %) books)
+                stems (mapcat #(:distinct-stems %) books)
+                nbooks (map #(dissoc % :distinct-tokens :distinct-stems) books)
+                words (reduce + (map #(:word-count %) books))]
+           (hash-map author {:books nbooks
+                             :distinct-token-count (count (distinct dtokens))
+                             :distinct-stem-count (count (distinct stems))
+                             :word-count words
+                             })))
        obj))
 
 (defn read-input-file [file]
@@ -85,14 +108,6 @@
         (map #(hash-map (first %)
                         (into {} (mapcat (partial read-authors (first %)) (second %))) )
              (read-string (slurp file)))))
-
-
-
-; (read-input-file in-file)
-
-; (map analyze-author (partition-by :author (take 3 (read-folders folders))))
-
-
 
 
 (defn -main
