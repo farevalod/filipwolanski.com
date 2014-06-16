@@ -5,7 +5,7 @@ fs = require 'fs'
 # list of the pages to be included in the site
 pages = [
   "montreal-realestate"
-  # "french-english-vocabulary"
+  "french-english-vocabulary"
 ]
 
 files =
@@ -100,6 +100,7 @@ module.exports = (grunt) ->
   grunt.registerTask "sitemap", "Create the sitemap", ->
     grunt.log.writeln 'Writing the sitemap...'
     fs.writeFile 'public/sitemap.xml', sitemap.toString()
+
   grunt.registerTask "default", [
       "sass:dist"
       "copy:dist"

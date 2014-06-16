@@ -43,7 +43,7 @@
 ;; gutenberg scaping to cache folder
 
 (def cache-folder ".cache/")
-(def gutenberg-mirror "http://library.beau.org/gutenberg/")
+(def gutenberg-mirror "http://mirror.csclub.uwaterloo.ca/gutenberg/")
 (def gutenberg-filter-regex #"[\*]+\s*(START|END) OF THIS PROJECT GUTENBERG.*")
 
 (defn num-to-url [n alt]
@@ -80,14 +80,17 @@
         text (download-book id encoding)
         tokens (tokenize text lang)
         dtokens (distinct tokens)
-        stemmed (stem-and-unique dtokens lang)
-        ]
-  (hash-map :title title
-            :word-count (count tokens)
-            :distinct-tokens dtokens
-            :distinct-stems stemmed
-            :distinct-token-count (count dtokens)
-            :distinct-stem-count (count stemmed) )))
+        stemmed (stem-and-unique dtokens lang)]
+    (do
+      (println (str "Processing " title))
+      (hash-map :title title
+                :word-count (count tokens)
+                :distinct-tokens dtokens
+                :distinct-stems stemmed
+                :distinct-token-count (count dtokens)
+                :distinct-stem-count (count stemmed) ))))
+
+; (process-book :english {:title "temp" :id 86 })
 
 (defn read-authors [lang obj]
   (map (fn [[author props]]
@@ -96,21 +99,31 @@
                 stems (mapcat #(:distinct-stems %) books)
                 nbooks (map #(dissoc % :distinct-tokens :distinct-stems) books)
                 words (reduce + (map #(:word-count %) books))]
-           (hash-map author {:books nbooks
+           (hash-map author {:dates (:dates props)
+                             :books nbooks
                              :distinct-token-count (count (distinct dtokens))
                              :distinct-stem-count (count (distinct stems))
                              :word-count words
                              })))
        obj))
 
+(defn pmapcat [f batches]
+  (->> batches
+       (pmap f)
+       (apply concat)
+       doall))
+
 (defn read-input-file [file]
   (into {}
         (map #(hash-map (first %)
-                        (into {} (mapcat (partial read-authors (first %)) (second %))) )
+                        (into {} (pmapcat (partial read-authors (first %)) (second %))) )
              (read-string (slurp file)))))
 
 
+; (spit output-file (json/write-str  (read-string (slurp in-file))))
+
 (defn -main
   [& args]
-  (spit output-file
-        (json/write-str (read-input-file in-file))))
+  (do (time (spit output-file
+                    (json/write-str (read-input-file in-file))))
+      (shutdown-agents)))
