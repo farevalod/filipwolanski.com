@@ -4,45 +4,50 @@ $bk: #F5F1EE
 $red: #ad6e75
 $blue: #6686a4
 
-$authorHeight: 3rem
-$scaleHeight: 3rem
-$transitionTime: 0.5s
+$titleHeight: 5rem
+$descHeight: 5rem
 
 body
   background-color: $bk
-
-.chart-container
-  vertical-align: top
-  width: 50%
-  padding: 1rem
-  #chart
-    .axis
-      stroke: $base3
-      fill: none
-      text
-        font: "fira"
-        font-size: 0.8rem
-    .bar
-      &.english
-        fill: $red
-      &.french
-        fill: $blue
-
-.description-container
-  vertical-align: top
-  padding: 1rem 0rem
-  width: 50%
   .header
-    color: $base3
-    padding-top: 1rem
-    font-weight: 700
-    font-size: 0.8rem
-    height: $scaleHeight
-  .author
-    height: $authorHeight
-    .name
-      font-weight: 700
-    .dates
-      margin-top: -0.4rem
-      font-size: 0.8rem
-      font-style: italic
+    position: absolute
+    top: 0
+    left: 0
+    height: $titleHeight
+    width: 100%
+    h1
+      text-transform: uppercase
+  #chart
+    border-top: 1px solid $base3
+    width: 100%
+    top: $titleHeight
+    position: absolute
+    overflow: hidden
+    #legend
+      position: absolute
+      height: 100%
+      width: 5rem
+      margin: 0 1rem
+      overflow: hidden
+      .axis
+        text
+          font: 0.8rem 'fira'
+        path,line
+          fill: none
+          stroke: #000
+          shape-rendering: crispEdges
+    .authorsContainer
+      position: absolute
+      top: 0
+      left: 5rem
+      right: 0
+      height: 100%
+      overflow: hidden
+      #authors
+        height: 100%
+        width: 300rem
+
+  #desc
+    position: absolute
+    width: 100%
+    height: 10rem

@@ -6,15 +6,18 @@ block meta
 block scripts
   script(src="/vendor/d3.min.js")
   script(src="/vendor/colorbrewer.js")
+  script(src="/vendor/iscroll.js")
   script(src="scripts/vocabulary.js")
 
 block styles
   link(rel='stylesheet', href='styles/vocabulary.css')
 
 block body
-  h1.center The Vocabulary of French and English Writers
-  .ib.chart-container
-    svg#chart
-  .ib.description-container
-    .header Unique words used by
-  .clear
+  .header
+    h1.center The Vocabulary of French and English Writers
+  #chart
+    svg#legend
+    .authorsContainer
+      #authors
+
+  #desc hello

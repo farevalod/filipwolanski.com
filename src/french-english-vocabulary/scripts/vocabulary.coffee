@@ -1,70 +1,61 @@
-authorHeight = 3
-scaleHeight = 2
+titleHeight = 5
+descHeight = 5
+chartHeight = 0
+rem = 16
 
-$( document ).ready ->
-  chart = d3.select "#chart"
+writers = []
+
+win = $ window
+
+data = $.get "assets/words.json", (d)->
+  writers = _.map d.english, (w, key) -> _.extend w,
+    author: key
+    language: "english"
+  writers = writers.concat _.map d.french, (w,key) -> _.extend w,
+    author: key
+    language: "french"
+  writers = _.sortBy writers, (w)-> -w['distinct-stem-count']
+
+
+setupAxis = _.once ->
+  d3.select "#legend"
+    .append 'g'
+    .attr "transform", "translate(0, #{rem})"
+    .attr 'class', 'axis'
+
+setupScroll = _.once ->
+  new IScroll '.authorsContainer',
+    mouseWheel: false
+    scrollbars: false
+
+render = ->
+  legend = setupAxis()
+  scroll = setupScroll()
+
+  max =  _.max _.pluck writers, 'distinct-stem-count'
+  max = 30000
+
+  invert_scale = d3.scale.linear().domain [max,0]
+    .range [0, chartHeight - 2*rem - descHeight*rem]
+  axis = d3.svg.axis()
+    .scale invert_scale
+    .orient "right"
+    .ticks 6
+
+  legend.call axis
+
+resize = ->
+  w = win.width()
+  h = win.height()
   rem = parseFloat $("html").css 'font-size'
-  desc = d3.select('.description-container')
+  chartHeight = h - titleHeight *rem
 
-  authorHeight *= rem
-  scaleHeight *= rem
-  chartWidth = $("#chart").width()
+  $('#chart').css 'height', chartHeight
+  $('#desc').css 'top', h
 
-  d3.json "assets/words.json", (d)->
-    writers = _.map d.english, (w, key) -> _.extend w,
-      author: key
-      language: "english"
+  data.done render
 
-    writers = writers.concat _.map d.french, (w,key) -> _.extend w,
-      author: key
-      language: "french"
 
-    writers = _.sortBy writers, (w)-> -w['distinct-stem-count']
-    max =  _.max _.pluck writers, 'distinct-stem-count'
-    max = 30000
-    stem_count = d3.scale.linear().domain [0,max]
-      .range [0, chartWidth]
+win.resize resize
+win.load resize
 
-    invert_scale = d3.scale.linear().domain [max,0]
-      .range [0, chartWidth]
-    axis = d3.svg.axis()
-      .scale invert_scale
-      .orient "bottom"
-      .ticks 6
-
-    chart.attr "height", writers.length*authorHeight + scaleHeight + 2*rem
-
-    chart.append 'g'
-      .attr "transform", "translate(#{1.5*rem}, #{rem})"
-      .attr 'class', 'x axis'
-      .call axis
-
-    chart.append('g')
-      .attr "transform", "translate(#{1.5*rem}, #{rem})"
-      .selectAll ".bar"
-      .data writers
-      .enter()
-      .append "g"
-      .attr "class", (d) -> "bar " + d['language']
-      .append "rect"
-      .attr "x", chartWidth
-      .attr "y", (d,k)-> 0.40*rem + scaleHeight + authorHeight*k
-      .attr "width", 0
-      .attr "height", 0.5*authorHeight
-
-    desc.selectAll('.author')
-      .data writers
-      .enter()
-      .append 'div'
-      .attr 'class', 'author'
-      .html (w)-> """
-          <div class="name">#{w.author}</div>
-          <div class="dates">#{w.dates[0]}-#{w.dates[1]}</div>
-        """
-
-    _.defer ->
-      chart.selectAll ".bar"
-        .transition()
-        .duration 1000
-        .attr "x", (d)-> chartWidth - stem_count d['distinct-stem-count']
-        .attr "width", (d)-> stem_count d['distinct-stem-count']
