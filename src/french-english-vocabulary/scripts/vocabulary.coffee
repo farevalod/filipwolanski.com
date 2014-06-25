@@ -26,7 +26,9 @@ setupAxis = _.once ->
 setupScroll = _.once ->
   new IScroll '.authorsContainer',
     mouseWheel: false
-    scrollbars: false
+    scrollbars: true
+    scrollX: true
+    scrollY: false
 
 render = ->
   legend = setupAxis()
