@@ -1,18 +1,22 @@
 @import ../../styles/mixins.sass
 
-$bk: #F5F1EE
+$bk: #ffffff
+// $bk: #F5F1EE
 $red: #ad6e75
 $blue: #6686a4
 
+$transitionTime: 0.5s
+
 $titleHeight: 5rem
-$descHeight: 5rem
+$descHeight: 15rem
+$barHeight: 15rem
+$legendWidth: 5rem
+$authorWidth: 8rem
+$bookWidth: 1rem
 
 body
   background-color: $bk
   .header
-    position: absolute
-    top: 0
-    left: 0
     height: $titleHeight
     width: 100%
     h1
@@ -20,34 +24,65 @@ body
   #chart
     border-top: 1px solid $base3
     width: 100%
-    top: $titleHeight
-    position: absolute
-    overflow: hidden
-    #legend
+    height: $barHeight+$descHeight
+    .legendContainer
+      display: inline-block
       position: absolute
-      height: 100%
-      width: 5rem
+      top: $titleHeight
+      left: 0
+      height: $barHeight
+      width: $legendWidth
       margin: 0 1rem
-      overflow: hidden
-      .axis
-        text
-          font: 0.8rem 'fira'
-        path,line
-          fill: none
-          stroke: #000
-          shape-rendering: crispEdges
+      z-index: 1
+      #legend
+        .axis
+          text
+            font-size: 0.8rem
+            font-weight: 700
+          path,line
+            fill: none
+            stroke: #000
+            shape-rendering: crispEdges
     .authorsContainer
-      position: absolute
-      top: 0
-      left: 5rem
-      right: 0
       height: 100%
+      width: 100%
+      padding: 0 0 0 $legendWidth+2rem
       overflow: hidden
       #authors
         height: 100%
-        width: 300rem
+        .book
+          cursor: pointer
+          .bar
+            +transition(background-color $transitionTime)
+            &.english
+              stroke: $red
+              fill: $red
+            &.french
+              stroke: $blue
+              fill: $blue
+        .author
+          text-anchor: start
+          line-height: 0.9rem
+          .title
+            font-size: 0.9rem
+            font-weight: 300
+          .name
+            font-size: 0.9rem
+            font-weight: 700
+          .dates
+            font-style: italic
+            font-size: 0.9rem
+            font-weight: 300
+          &.active
+            .bar
+              background-color: transparent
+              .books
+                display: inline-block
+          &.inactive
+            .bar
+              background-color: $base3
+
 
   #desc
-    position: absolute
     width: 100%
     height: 10rem
