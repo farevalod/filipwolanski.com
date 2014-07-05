@@ -1,8 +1,10 @@
 titleHeight = 5
 descHeight = 5
 authorWidth = 3
-chartHeight = 15
-bookWidth = 2
+chartHeight = 20
+bookWidth = 3
+chartPadding = 7
+
 rem = 16
 transitionTime = 1000
 
@@ -15,11 +17,11 @@ data = $.get "assets/words.json", (d)->
   writers = _.map d.english, (w, key) -> _.extend w,
     author: key
     language: "english"
-    expanded: true
+    expanded: false
   writers = writers.concat _.map d.french, (w,key) -> _.extend w,
     author: key
     language: "french"
-    expanded: true
+    expanded: false
   writers = _.sortBy writers, (w)-> -w['distinct-stem-count']
 
   _.each writers, (w, i)->
@@ -32,10 +34,12 @@ data = $.get "assets/words.json", (d)->
     writer['author-distinct-token-count'] = w['distinct-token-count']
     writer['author-word-count'] = w['word-count']
     writer['number-of-books'] = w.books.length
+    writer['author-density'] = w['distinct-token-count']/w['word-count']
     writer.index = i
     writer.books = _.sortBy writer.books, (w)-> -w['distinct-stem-count']
     books.push.apply books, _.map w.books, (b,i)->
       b['book-index'] = i
+      b['density'] =  b['distinct-token-count']/b['word-count']
       _.extend b, writer
 
   books = _.sortBy books, (w)-> -(w.index + w['book-index']/100)
@@ -52,13 +56,29 @@ setupAxis = (scale) ->
    .orient "right"
    .ticks 6
 
-setupScale = ->
+setupScales = ->
   max =  _.max _.pluck writers, 'distinct-stem-count'
   max = 30000
-  d3.scale
+  stem = d3.scale
     .linear()
     .domain [max,0]
     .range [0, chartHeight*rem - 2*rem ]
+
+  max =  _.max _.pluck writers, 'word-count'
+  words = d3.scale
+    .pow().exponent(0.5)
+    .domain [0,max]
+    .range [0, authorWidth*rem]
+
+  max =  _.max _.pluck books, 'density'
+  density = d3.scale
+    .linear()
+    .domain [0,max]
+    .range [0, 0.8]
+
+  stem:stem
+  words:words
+  density:density
 
 setupScroll = _.once (positions)->
 
@@ -66,12 +86,12 @@ setupScroll = _.once (positions)->
     .width _.max(_.pluck positions, 'position') + authorWidth + rem
   new IScroll '.authorsContainer',
     mouseWheel: false
-    scrollbars: true
+    scrollbars: false
     scrollX: true
     scrollY: false
 
 setupBooks = _.once ->
-  d3.select "#authors"
+  bks = d3.select "#authors"
     .selectAll '.book'
     .data books
     .enter()
@@ -80,16 +100,36 @@ setupBooks = _.once ->
     .on 'click', (d,i)->
       writers[d.index].expanded = not writers[d.index].expanded
       render withTransitions: true
-    .append 'rect'
+  bks
+    .append 'circle'
+    .attr 'class', 'words'
+  bks
+    .append 'circle'
+    .attr 'class', (d) -> "tokens #{d.language}"
+  bks
 
 setupAuthors = _.once ->
-  d3.select "#authors"
+  authors = d3.select "#authors"
     .selectAll '.author'
     .data books
     .enter()
     .append 'g'
     .attr 'class', 'author'
+    .on 'click', (d,i)->
+      writers[d.index].expanded = not writers[d.index].expanded
+      render withTransitions: true
+  authors
     .append 'text'
+    .attr 'class', 'text'
+    .attr 'transform', "translate(#{-0.2*rem},#{0.5*rem})rotate(45)"
+  authors
+    .append 'line'
+    .attr 'class', 'grid'
+    .attr 'x1', 0
+    .attr 'x2', 0
+    .attr 'y1', -rem
+    .attr 'y2', -chartHeight*rem
+  authors
 
 makeBookPositions = ->
   value = 'distinct-stem-count'
@@ -99,6 +139,7 @@ makeBookPositions = ->
     type: "author"
     index: w.index
     value: w[value]
+
   _.each _.filter(writers, (w)-> w.expanded), (w)->
     b = _.filter books, (b)-> b.index is w.index
     index.push.apply index, _.map b, (b,i)->
@@ -108,7 +149,7 @@ makeBookPositions = ->
       value: b[value]
   index = _.sortBy index, (i) -> -i.value
 
-  position = 0
+  position = chartPadding*rem
   for idx,i in index
     idx.position = position
     if idx.type is 'author' then position+=(authorWidth*rem) + rem
@@ -117,9 +158,7 @@ makeBookPositions = ->
 
 getBookPosition = (positions, d, i) ->
   unless writers[d.index].expanded
-    rectWidth = (authorWidth*rem)/d['number-of-books']
-    pos = _.find(positions, (p) -> p.type is 'author' and p.index is d.index).position
-    pos + (d['book-index'] *rectWidth )
+    _.find(positions, (p) -> p.type is 'author' and p.index is d.index).position
   else
     _.find(positions, (p) ->
       p.type is 'book' and p.index is d.index and p.bindex is d['book-index']).position
@@ -135,17 +174,11 @@ getBookWidth = (positions, d, i) ->
   unless writers[d.index].expanded then (authorWidth*rem)/d['number-of-books']
   else (bookWidth*rem)
 
-getAuthorX = (positions, d, i) ->
-  unless writers[d.index].expanded
-    p = _.find(positions, (p) -> p.type is 'author' and p.index is d.index).position
-    p + (authorWidth*rem)/2 - rem / 2
-  else
-    p = _.find(positions, (p) ->
-      p.type is 'book' and p.index is d.index and p.bindex is d['book-index']).position
-    p + (bookWidth*rem)/2 - rem / 2
+getBookOpacity = (d,i) ->
+  unless writers[d.index].expanded then 0.3/d['number-of-books']
+  else 0.3
 
-getAuthorY = (positions, d, i) ->
-  chartHeight*rem
+getAuthorY = (positions, d, i) -> chartHeight*rem
 
 getAuthorRotation = (d,i) -> if writers[d.index].expanded then 45 else 45
 
@@ -167,40 +200,52 @@ render = (opts) ->
 
   positions = makeBookPositions()
 
-  scale = setupScale()
+  scales = setupScales()
   if opts.withLegend
     legend = setupLegend()
-    axis = setupAxis scale
+    axis = setupAxis scales.stem
     legend.call axis
 
   scroll = setupScroll positions
   authors = setupAuthors()
-  titles = setupBooks()
+  bks = setupBooks()
+
+  $ '#authors'
+    .width _.max(_.pluck positions, 'position') + 3*authorWidth*rem + rem
+  scroll.refresh()
 
   positionFn = _.partial getBookPosition, positions
   heightFn = _.partial getBookHeight, positions
   widthFn = _.partial getBookWidth, positions
-  authorXFn = _.partial getAuthorX, positions
   authorYFn = _.partial getAuthorY, positions
 
-  titles
-    .attr 'class', (d) -> "bar #{d.language} #{d['book-index']}"
-  authors
+  words = bks.selectAll '.words'
+  tokens = bks.selectAll '.tokens'
+  text = authors.selectAll '.text'
+
+  text
     .html getAuthorText
     .style 'display', getAuthorTextDisplay
 
   if opts.withTransitions
-    titles = titles.transition().duration transitionTime
+    bks = bks.transition().duration transitionTime
+    words = words.transition().duration transitionTime
+    tokens = tokens.transition().duration transitionTime
     authors = authors.transition().duration transitionTime
 
-  titles
+  bks
     .attr 'transform', (d,i) ->
-      "translate(#{positionFn(d,i)},#{(scale(heightFn(d,i)) + rem)})"
-    .attr 'height', (d,i) -> (chartHeight*rem - scale(heightFn(d,i)) - 2*rem)
-    .attr 'width', widthFn
+      "translate(#{positionFn(d,i)},#{(scales.stem(heightFn(d,i)) + rem)})"
+    .attr 'opacity', getBookOpacity
+  words.attr 'r', (d,i) ->
+    if writers[d.index].expanded then scales.words d['word-count']
+    else scales.words d['author-word-count']
+  tokens.attr 'r', (d,i) ->
+    if writers[d.index].expanded then scales.words(scales.density(d['density']) * d['word-count'])
+    else scales.words(scales.density(d['author-density']) * d['author-word-count'])
   authors
     .attr 'transform', (d,i) ->
-      "translate(#{authorXFn(d,i)},#{authorYFn.call(@,d,i)})rotate(#{getAuthorRotation(d,i)})"
+      "translate(#{positionFn(d,i)},#{authorYFn.call(@,d,i)})"
 
 
 resize = ->

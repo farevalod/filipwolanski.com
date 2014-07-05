@@ -3,11 +3,12 @@
             [clj-http.client :as client]
             )
   (:use opennlp.nlp
-        opennlp.tools.lazy)
+        opennlp.tools.lazy
+        clojure.java.shell
+    )
   (:import java.io.File
            com.atlascopco.hunspell.Hunspell)
   (:gen-class))
-
 
 
 ;; tokenization and counting
@@ -34,15 +35,31 @@
                (mapcat split-hyphenation ((lang tokenizers) text)))))
 
 (defn stem-and-unique [s lang]
-  (distinct (map #(let [stem (.stem (lang stemmers) %)]
-                    (if (empty? stem) % (apply min-key count stem))) s)))
+  (distinct (remove nil? (map #(let [stem (.stem (lang stemmers) %)]
+                    (if (empty? stem) nil (apply min-key count stem))) s))))
 
 ; (apply min-key count (.stem (:english stemmers) "was" ))
 
 
+; (stem-and-unique (tokenize "This is a test to see how well it goes gidfs" :english) :english)
+
+;; wikisource scraping to cache folder
+(def cache-folder ".cache/")
+
+(defn wiki-download-book [title lang]
+  (let [filename (str cache-folder (remove-punctuation title) ".txt")
+        l (if (= lang :french) "fr" "en")]
+    (do
+      (if (not (.exists (clojure.java.io/as-file cache-folder)))
+        (.mkdir (java.io.File. cache-folder)))
+      (if (not (.exists (clojure.java.io/as-file filename)))
+        (spit filename  (:out (sh "vendor/tool/cli/book.php" "-t" title "-l" l))))
+      (slurp filename))))
+
+;; (wiki-download-book "The_Sonnets" :english)
+
 ;; gutenberg scaping to cache folder
 
-(def cache-folder ".cache/")
 (def gutenberg-mirror "http://mirror.csclub.uwaterloo.ca/gutenberg/")
 (def gutenberg-filter-regex #"[\*]+\s*(START|END) OF THIS PROJECT GUTENBERG.*")
 
@@ -55,7 +72,7 @@
   (let [split (clojure.string/split text gutenberg-filter-regex)]
     (apply max-key count split)))
 
-(defn download-book [id encoding]
+(defn gutenberg-download-book [id encoding]
   (let [filename (str cache-folder id ".txt")]
     (do
       (if (not (.exists (clojure.java.io/as-file cache-folder)))
@@ -73,11 +90,17 @@
 (def output-file "words.json")
 (def in-file "texts.edn")
 
+(defn download-book [id encoding source lang]
+  (case source
+    "gutenberg" (gutenberg-download-book id encoding)
+    "wiki" (wiki-download-book id lang)))
+
 (defn process-book [lang book]
   (let [title (:title book)
         encoding (if (:encoding book) (:encoding book) "UTF-8")
+        source (if (:source book) (:source book) "gutenberg")
         id (:id book)
-        text (download-book id encoding)
+        text (download-book id encoding source lang)
         tokens (tokenize text lang)
         dtokens (distinct tokens)
         stemmed (stem-and-unique dtokens lang)]

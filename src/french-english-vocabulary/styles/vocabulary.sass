@@ -9,7 +9,7 @@ $transitionTime: 0.5s
 
 $titleHeight: 5rem
 $descHeight: 15rem
-$barHeight: 15rem
+$barHeight: 20rem
 $legendWidth: 5rem
 $authorWidth: 8rem
 $bookWidth: 1rem
@@ -25,6 +25,7 @@ body
     border-top: 1px solid $base3
     width: 100%
     height: $barHeight+$descHeight
+    cursor: move
     .legendContainer
       display: inline-block
       position: absolute
@@ -41,28 +42,31 @@ body
             font-weight: 700
           path,line
             fill: none
-            stroke: #000
+            stroke: $base1
             shape-rendering: crispEdges
     .authorsContainer
       height: 100%
       width: 100%
-      padding: 0 0 0 $legendWidth+2rem
       overflow: hidden
       #authors
         height: 100%
         .book
           cursor: pointer
-          .bar
-            +transition(background-color $transitionTime)
+          .words
+            fill: $base0
+          .tokens
             &.english
-              stroke: $red
               fill: $red
             &.french
-              stroke: $blue
               fill: $blue
         .author
+          cursor: pointer
           text-anchor: start
           line-height: 0.9rem
+          .grid
+            stroke: $base3
+            stroke-dasharray: 2,2
+            shape-rendering: crispEdges
           .title
             font-size: 0.9rem
             font-weight: 300

@@ -83,9 +83,22 @@
 
    "William Shakespeare"
    {:dates [1564 1616]
-    :books
-    [{:title "Complete Works"
-     :id  100 }
+    :books[
+     {:title "The Sonnets"
+     :id "The_Sonnets"
+     :source "wiki"}
+     {:title "Othello"
+     :id "The_Tragedy_of_Othello,_The_Moor_of_Venice"
+     :source "wiki"}
+     {:title "King Lear"
+     :id "The_Tragedy_of_King_Lear"
+     :source "wiki"}
+     {:title "Macbeth"
+     :id "The_Tragedy_of_Macbeth"
+     :source "wiki"}
+     {:title "Hamlet"
+     :id "The_Tragedy_of_Hamlet,_Prince_of_Denmark"
+     :source "wiki"}
     ]}
 
 
@@ -157,10 +170,16 @@
    "Molière"
    {:dates [1622 1673]
     :books [
+     {:title "Tartuffe"
+     :id "Tartuffe_ou_l’Imposteur/Édition_Louandre,_1910/Texte_entier"
+     :source "wiki"}
+     {:title "Le Misanthrope"
+     :id "Le_Misanthrope/Édition_Louandre,_1910"
+     :source "wiki"}
      {:title "Don Juan"
      :id 5130
      :encoding "ISO-8859-1"}
-     {:title " L'Avare"
+     {:title "L'Avare"
      :id 6318
      :encoding "ISO-8859-1"}
      {:title "Le Médicin Malgré Lui"
@@ -202,15 +221,24 @@
    "Honoré de Balzac"
    {:dates [1799 1850]
     :books [
-     {:title "La comédie humaine volume I"
-     :id 41211
-     :encoding "ISO-8859-1"}
-     {:title "La comédie humaine volume II"
-     :id 43851
-     :encoding "ISO-8859-1"}
-     {:title "La comédie humaine volume III"
-     :id 45060
-     :encoding "ISO-8859-1"}
+     {:title "Ursule Mirouët"
+     :id "Ursule_Mirouët"
+     :source "wiki"}
+     {:title "La Cousine Bette"
+     :id "La_Cousine_Bette_(ed._Houssiaux)"
+     :source "wiki"}
+     {:title "Louis Lambert"
+     :id "Louis_Lambert"
+     :source "wiki"}
+     {:title "Le Père Goriot"
+     :id "Le_Père_Goriot"
+     :source "wiki"}
+     {:title "La peau de chagrin"
+     :id "La_Peau_de_chagrin"
+     :source "wiki"}
+     {:title "La fille aux yeux d’or"
+     :id "La_Fille_aux_yeux_d’or"
+     :source "wiki"}
      {:title "Eugenie Grandet"
      :id 11049
      :encoding "ISO-8859-1"}
@@ -239,6 +267,9 @@
    "Gustav Flaubert"
    {:dates [1821 1880]
     :books [
+     {:title "L’Éducation sentimentale"
+     :id "L’Éducation_sentimentale,_éd._Conard,_1910"
+     :source "wiki"}
      {:title "Madame Bovary"
      :id 14155
      :encoding "ISO-8859-1"}
