@@ -99,6 +99,12 @@
      {:title "Hamlet"
      :id "The_Tragedy_of_Hamlet,_Prince_of_Denmark"
      :source "wiki"}
+     {:title "Romeo and Juliet"
+     :id "The_Tragedy_of_Romeo_and_Juliet"
+     :source "wiki"}
+     {:title "The Tempest"
+     :id "The_Tempest"
+     :source "wiki"}
     ]}
 
 
@@ -262,6 +268,32 @@
      {:title "Les Cenci"
      :id 801
      :encoding "ISO-8859-1"}
+    ]}
+
+   "Marcel Proust"
+   {:dates [1871 1922]
+    :books [
+     {:title "Du côté de chez Swann"
+     :id "Du_côté_de_chez_Swann"
+     :source "wiki"}
+     {:title "À l’ombre des jeunes filles en fleurs"
+     :id "À_l’ombre_des_jeunes_filles_en_fleurs"
+     :source "wiki"}
+     {:title "Le côté de Guermantes"
+     :id "Le_Côté_de_Guermantes"
+     :source "wiki"}
+     {:title "Sodome et Gomorrhe"
+     :id "Sodome_et_Gomorrhe"
+     :source "wiki"}
+     {:title "La prisonnière"
+     :id "La_Prisonnière"
+     :source "wiki"}
+     {:title "Albertine disparue"
+     :id "Albertine_disparue"
+     :source "wiki"}
+     {:title "Le temps retrouvé"
+     :id "Le_Temps_retrouvé"
+     :source "wiki"}
     ]}
 
    "Gustav Flaubert"

@@ -40,7 +40,6 @@
 
 ; (apply min-key count (.stem (:english stemmers) "was" ))
 
-
 ; (stem-and-unique (tokenize "This is a test to see how well it goes gidfs" :english) :english)
 
 ;; wikisource scraping to cache folder
@@ -56,7 +55,7 @@
         (spit filename  (:out (sh "vendor/tool/cli/book.php" "-t" title "-l" l))))
       (slurp filename))))
 
-;; (wiki-download-book "The_Sonnets" :english)
+; (wiki-download-book "The_Tempest" :english)
 
 ;; gutenberg scaping to cache folder
 

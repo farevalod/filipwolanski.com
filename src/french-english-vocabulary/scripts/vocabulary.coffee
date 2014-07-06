@@ -3,7 +3,7 @@ descHeight = 5
 authorWidth = 3
 chartHeight = 20
 bookWidth = 3
-chartPadding = 7
+chartLeftPadding = 7
 
 rem = 16
 transitionTime = 1000
@@ -58,7 +58,7 @@ setupAxis = (scale) ->
 
 setupScales = ->
   max =  _.max _.pluck writers, 'distinct-stem-count'
-  max = 30000
+  max = 15000
   stem = d3.scale
     .linear()
     .domain [max,0]
@@ -149,7 +149,7 @@ makeBookPositions = ->
       value: b[value]
   index = _.sortBy index, (i) -> -i.value
 
-  position = chartPadding*rem
+  position = chartLeftPadding*rem
   for idx,i in index
     idx.position = position
     if idx.type is 'author' then position+=(authorWidth*rem) + rem
@@ -191,10 +191,13 @@ getAuthorText = (d,i) ->
   s  = if writers[d.index].expanded
     "<tspan class='title'>#{d['title']}</tspan>&nbsp;&nbsp;"
   else ""
-  s + """
-  <tspan class="name">#{d['author']}</tspan>&nbsp;&nbsp;
-  <tspan class="dates">(#{d.dates[0]}-#{d.dates[1]})</tspan>
+  s += """
+  <tspan class="name">#{d['author']}</tspan>
   """
+  v = unless writers[d.index].expanded
+        "&nbsp;&nbsp; <tspan class='dates'>(#{d.dates[0]}-#{d.dates[1]})</tspan>"
+  else ""
+  s+v
 
 render = (opts) ->
 
