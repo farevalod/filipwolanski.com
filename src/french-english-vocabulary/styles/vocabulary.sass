@@ -1,7 +1,6 @@
 @import ../../styles/mixins.sass
 
-$bk: #ffffff
-// $bk: #F5F1EE
+$bk: #F5F1EE
 $red: #ad6e75
 $blue: #6686a4
 
@@ -9,38 +8,73 @@ $transitionTime: 0.5s
 
 $titleHeight: 5rem
 $descHeight: 15rem
-$barHeight: 20rem
+$barHeight: 15rem
 $legendWidth: 5rem
 $authorWidth: 8rem
 $bookWidth: 1rem
 
 body
-  background-color: $bk
-  .header
-    height: $titleHeight
-    width: 100%
-    h1
-      text-transform: uppercase
+  .wrapper
+    width: 55rem
+    margin: 0 auto
+    .header
+      width: 100%
+      margin: 3rem 0 3rem 0
+      h1
+        text-transform: uppercase
+        margin: 0
+        font-size: 2rem
+        line-height: 2rem
+        padding: 0
+      h2
+        font-family: 'merriweather'
+        font-weight: 300
+        font-style: italic
+        font-size: 1.1rem
+        line-height: 1.1rem
+        margin: 0.5rem 0 0 0
+        padding: 0
+      h3
+        font-weight: 300
+        font-size: 1.1rem
+        line-height: 1.1rem
+        margin: 3rem 0 0 0
+        padding: 0
+        color: $base2
+
+    h2
+      font-weight: 700
+      font-size: 1.1rem
+      color: $base0
+      padding: 1rem 0
+    .text
+      font-family: 'merriweather'
+      font-weight: 300
+      line-height: 1.7rem
+      font-size: 1rem
+      padding: 0 0 1.7rem 0
+
   #chart
-    border-top: 1px solid $base3
-    border-bottom: 1px solid $base3
     width: 100%
     height: $barHeight+$descHeight
     cursor: move
+    position: relative
+    margin: 1rem 0
     .legendContainer
       display: inline-block
       position: absolute
-      top: $titleHeight
+      top: 0
       left: 0
       height: $barHeight
       width: $legendWidth
-      margin: 0 1rem
+      margin: 0 0 0 1rem
       z-index: 1
       #legend
+        height: $barHeight
         .axis
           text
             font-size: 0.8rem
-            font-weight: 700
+            font-weight: 300
           path,line
             fill: none
             stroke: $base1
@@ -63,20 +97,17 @@ body
         .author
           cursor: pointer
           text-anchor: start
-          line-height: 0.9rem
+          font-size: 0.8rem
           .grid
             stroke: $base3
             stroke-dasharray: 2,2
             shape-rendering: crispEdges
           .title
-            font-size: 0.9rem
             font-weight: 300
           .name
-            font-size: 0.9rem
             font-weight: 700
           .dates
             font-style: italic
-            font-size: 0.9rem
             font-weight: 300
           &.active
             .bar
@@ -87,7 +118,3 @@ body
             .bar
               background-color: $base3
 
-
-  #desc
-    width: 100%
-    height: 10rem

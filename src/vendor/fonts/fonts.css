@@ -30,3 +30,26 @@
     font-style: italic;
 
 }
+
+
+@font-face {
+    font-family: 'merriweather';
+    src: url('merriweather-italic-webfont.eot');
+    src: url('merriweather-italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('merriweather-italic-webfont.woff') format('woff'),
+         url('merriweather-italic-webfont.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+
+}
+
+@font-face {
+    font-family: 'merriweather';
+    src: url('merriweather-regular-webfont.eot');
+    src: url('merriweather-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('merriweather-regular-webfont.woff') format('woff'),
+         url('merriweather-regular-webfont.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+
+}

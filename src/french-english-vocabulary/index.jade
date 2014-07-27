@@ -13,11 +13,18 @@ block styles
   link(rel='stylesheet', href='styles/vocabulary.css')
 
 block body
-  .header
-    h1.center The Vocabulary of French and English Writers
+  .wrapper
+    .header
+      h1 Investigating Vocabulary Size
+      h2 An interactive exploration of the vocabulary size of some greatest English and French writers from the late 16th to the early 20th century
+      h3 Filip Wolanski &mdash; July 10, 2014
+    .text Did you know that the English language probably has more words than most other languages? It probably has more words than French. I say “probably" because there is no way to decide what counts as a word and what doesn’t. Recently, there’s been some serious fighting over this question in linguistic circles with no clear winner, but looking at the two largest dictionaries in either language: the Second Edition of the Oxford English Dictionary has 218,623 words and 615,100 definitions, while Le Grand Robert de la langue française has about 100,000 words and 350,000 definitions.
+    .text Of course, this says nothing about usage. What I’m interested in is the vocabulary size of some of each language’s greatest practitioners.
+    h2.center Vocabulary size of French and English authors with word count and textual density
   #chart
     .legendContainer
       svg#legend
     .authorsContainer
       svg#authors
-  #desc hello
+  .wrapper
+    .text

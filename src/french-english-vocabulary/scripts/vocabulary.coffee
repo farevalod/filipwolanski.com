@@ -1,8 +1,8 @@
 titleHeight = 5
 descHeight = 5
-authorWidth = 3
-chartHeight = 20
-bookWidth = 3
+authorWidth = 2
+chartHeight = 15
+bookWidth = 2
 chartLeftPadding = 7
 
 rem = 16
@@ -81,9 +81,6 @@ setupScales = ->
   density:density
 
 setupScroll = _.once (positions)->
-
-  $ '#authors'
-    .width _.max(_.pluck positions, 'position') + authorWidth + rem
   new IScroll '.authorsContainer',
     mouseWheel: false
     scrollbars: false
@@ -128,7 +125,7 @@ setupAuthors = _.once ->
     .attr 'x1', 0
     .attr 'x2', 0
     .attr 'y1', -rem
-    .attr 'y2', -chartHeight*rem
+    .attr 'y2', -chartHeight*rem + rem
   authors
 
 makeBookPositions = ->
@@ -200,8 +197,13 @@ getAuthorText = (d,i) ->
   s+v
 
 render = (opts) ->
+  wid = $(".wrapper").offset().left
+  $('.legendContainer').css marginLeft: wid
+  chartLeftPadding = 7 + wid/rem
 
   positions = makeBookPositions()
+  $ '#authors'
+    .width _.max(_.pluck positions, 'position') + 3*authorWidth*rem + rem
 
   scales = setupScales()
   if opts.withLegend
@@ -213,8 +215,6 @@ render = (opts) ->
   authors = setupAuthors()
   bks = setupBooks()
 
-  $ '#authors'
-    .width _.max(_.pluck positions, 'position') + 3*authorWidth*rem + rem
   scroll.refresh()
 
   positionFn = _.partial getBookPosition, positions
