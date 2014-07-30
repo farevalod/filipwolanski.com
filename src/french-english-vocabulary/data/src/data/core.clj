@@ -1,11 +1,9 @@
 (ns data.core
   (:require [clojure.data.json :as json]
-            [clj-http.client :as client]
-            )
+            [clj-http.client :as client])
   (:use opennlp.nlp
         opennlp.tools.lazy
-        clojure.java.shell
-    )
+        clojure.java.shell)
   (:import java.io.File
            com.atlascopco.hunspell.Hunspell)
   (:gen-class))
@@ -24,7 +22,6 @@
 (defn remove-punctuation [s]
   (let [ lower-s (clojure.string/lower-case s) ]
     (clojure.string/replace lower-s #"[^a-z']" "")))
-
 
 (defn split-hyphenation [s]
     (clojure.string/split s #"-"))
