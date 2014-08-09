@@ -99,10 +99,7 @@ setupBooks = _.once ->
       render withTransitions: true
   bks
     .append 'circle'
-    .attr 'class', 'words'
-  bks
-    .append 'circle'
-    .attr 'class', (d) -> "tokens #{d.language}"
+    .attr 'class', (d) -> "words #{d.language}"
   bks
 
 setupAuthors = _.once ->
@@ -223,7 +220,6 @@ render = (opts) ->
   authorYFn = _.partial getAuthorY, positions
 
   words = bks.selectAll '.words'
-  tokens = bks.selectAll '.tokens'
   text = authors.selectAll '.text'
 
   text
@@ -233,7 +229,6 @@ render = (opts) ->
   if opts.withTransitions
     bks = bks.transition().duration transitionTime
     words = words.transition().duration transitionTime
-    tokens = tokens.transition().duration transitionTime
     authors = authors.transition().duration transitionTime
 
   bks
@@ -243,9 +238,6 @@ render = (opts) ->
   words.attr 'r', (d,i) ->
     if writers[d.index].expanded then scales.words d['word-count']
     else scales.words d['author-word-count']
-  tokens.attr 'r', (d,i) ->
-    if writers[d.index].expanded then scales.words(scales.density(d['density']) * d['word-count'])
-    else scales.words(scales.density(d['author-density']) * d['author-word-count'])
   authors
     .attr 'transform', (d,i) ->
       "translate(#{positionFn(d,i)},#{authorYFn.call(@,d,i)})"
