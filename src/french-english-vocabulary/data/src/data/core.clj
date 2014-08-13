@@ -143,6 +143,6 @@
 
 (defn -main
   [& args]
-  (do (time (spit output-file
-                    (json/write-str (read-input-file in-file))))
+  (do (time (spit output-file (str "words = "
+                    (json/write-str (read-input-file in-file)) ";")))
       (shutdown-agents)))

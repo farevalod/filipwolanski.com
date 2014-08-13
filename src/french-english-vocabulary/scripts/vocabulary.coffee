@@ -13,7 +13,8 @@ books = []
 
 win = $ window
 
-data = $.get "assets/words.json", (d)->
+processData = ->
+  d = window.words
   writers = _.map d.english, (w, key) -> _.extend w,
     author: key
     language: "english"
@@ -256,9 +257,11 @@ resize = ->
   h = win.height()
   rem = parseFloat $("html").css 'font-size'
 
-  data.done render withLegend: true
+  render withLegend: true
 
 
 win.resize resize
-win.load resize
+win.load ->
+  processData()
+  resize()
 
