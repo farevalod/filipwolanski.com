@@ -19,6 +19,8 @@
   {:english (Hunspell. "models/en.dic" "models/en.aff")
    :french (Hunspell. "models/fr.dic" "models/fr.aff")})
 
+(def limit 5000)
+
 (defn remove-punctuation [s]
   (let [ lower-s (clojure.string/lower-case s) ]
     (clojure.string/replace lower-s #"[^a-z']" "")))
@@ -99,7 +101,11 @@
         text (download-book id encoding source lang)
         tokens (tokenize text lang)
         dtokens (distinct tokens)
-        stemmed (stem-and-unique dtokens lang)]
+        stemmed (stem-and-unique dtokens lang)
+        l-tokens (take limit tokens)
+        l-dtokens (distinct l-tokens)
+        l-stemmed (stem-and-unique l-dtokens lang)
+        ]
     (do
       (println (str "Processing " title))
       (hash-map :title title
@@ -107,7 +113,9 @@
                 :distinct-tokens dtokens
                 :distinct-stems stemmed
                 :distinct-token-count (count dtokens)
-                :distinct-stem-count (count stemmed) ))))
+                :distinct-stem-count (count stemmed)
+                :limited-token-count (count l-dtokens)
+                :limited-stem-count (count l-stemmed)))))
 
 ; (process-book :english {:title "temp" :id 86 })
 

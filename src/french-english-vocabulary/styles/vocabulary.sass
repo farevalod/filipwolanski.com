@@ -71,6 +71,7 @@ body
       z-index: 1
       #legend
         height: $barHeight
+        pointer-events: none
         .axis
           text
             font-size: 0.8rem
@@ -88,8 +89,6 @@ body
         .book
           cursor: pointer
           .words
-            fill: $base0
-          .tokens
             &.english
               fill: $red
             &.french
