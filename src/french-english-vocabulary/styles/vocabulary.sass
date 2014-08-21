@@ -13,6 +13,7 @@ $legendWidth: 5rem
 $authorWidth: 8rem
 $bookWidth: 1rem
 
+
 body
   .wrapper
     width: 55rem
@@ -45,13 +46,13 @@ body
     h2
       font-weight: 700
       font-size: 1.1rem
-      color: $base0
+      color: $base1
       padding: 1rem 0
     .text
       font-family: 'merriweather'
       font-weight: 300
-      line-height: 1.7rem
-      font-size: 1rem
+      line-height: 1.45
+      font-size: 1.2rem
       padding: 0 0 1.7rem 0
 
   #chart
@@ -61,6 +62,7 @@ body
     position: relative
     margin: 1rem 0
     .legendContainer
+      pointer-events: none
       display: inline-block
       position: absolute
       top: 0
@@ -141,9 +143,14 @@ body
             color: $blue
 
     .text
+      font-family: 'fira'
       display: inline-block
+      text-align: justify
       width: 70%
       .hidden
-        color: $base3
-
+        color: $base4
+        cursor: pointer
+      .changed
+        color: $blue
+        cursor: pointer
 

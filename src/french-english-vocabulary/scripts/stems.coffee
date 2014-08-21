@@ -27,15 +27,21 @@ toggleStems = (lang, ev) ->
   data = window.stems[lang]
   $container = $ ".stems.#{lang} .text"
 
-  datasel = if action is 'text' then 'word' else 'stem'
-  $container.find('span').removeClass 'hidden'
-  _.each data, (d, idx) ->
+  $container.find('span').removeClass 'hidden changed'
+
+  if action is 'stem' then _.each data, (d, idx) ->
     $e = $container.find("[data-id=#{idx}]")
-    unless d[datasel].length then $e.addClass 'hidden'
-    else $container.find("[data-id=#{idx}]").text d[datasel]
+    unless d.stem.length then $e.addClass 'hidden'
+    else unless d.stem is d.token then $e.addClass 'changed'
+    if d.stem.length then $e.text d.stem
+
+  else _.each data, (d, idx) -> $container.find("[data-id=#{idx}]").text d.word
 
 
 $(window).load ->
   renderStems "english"
   $('.stems.english .menu .item').click _.partial toggleStems, 'english'
+
+  renderStems 'french'
+  $('.stems.french .menu .item').click _.partial toggleStems, 'french'
 
