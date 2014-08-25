@@ -128,6 +128,7 @@ body
       width: 30%
       font-weight: 700
       font-size: 1rem
+      padding: 0 2rem 0 0
       .expl
         padding-right: 1rem
         font-weight: 300
@@ -152,7 +153,9 @@ body
       width: 70%
       .word
         display: inline-block
-        +transition(transform 0.4s)
+        +transition((transform 0.4s, opacity 0.4s))
+        &.hide
+          opacity: 0.1
         &.hidden
           color: $red
         &.duplicate
@@ -160,9 +163,9 @@ body
         &.changed
           color: $blue
           cursor: pointer
-          &:hover, &:focus, &:active
+          &:hover, &:active
             transform: translate(0,5px)
-          &:hover:after
+          &:hover::after
             background: $base2
             background: rgba(0,0,0,.8)
             +border-radius(.5rem)
@@ -176,7 +179,7 @@ body
             white-space: nowrap
             z-index: 98
             font-size: 0.8rem
-          &:hover:before
+          &:hover::before
             border: solid
             border-color: $base2 transparent
             border-color: rgba(0,0,0,.8) transparent
@@ -187,3 +190,18 @@ body
             left: 1rem
             position: absolute
             z-index: 99
+
+    .legend
+      font-size: 0.8rem
+      font-weight: 300
+      display: none
+      .filter, .legent-text
+        display: inline-block
+        text-decoration: underline
+        cursor: pointer
+        &.stemmed
+          color: $blue
+        &.removed
+          color: $red
+        &.duplicates
+          color: $base4

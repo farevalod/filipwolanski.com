@@ -9,6 +9,17 @@
 
 }
 
+/* @font-face { */
+/*     font-family: 'fira'; */
+/*     src: url('firasans-regular-webfont.eot'); */
+/*     src: url('firasans-regular-webfont.eot?#iefix') format('embedded-opentype'), */
+/*          url('firasans-regular-webfont.woff') format('woff'), */
+/*          url('firasans-regular-webfont.ttf') format('truetype'); */
+/*     font-weight: 400; */
+/*     font-style: normal; */
+
+/* } */
+
 @font-face {
     font-family: 'fira';
     src: url('firasans-light-webfont.eot');

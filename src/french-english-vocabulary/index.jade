@@ -34,11 +34,19 @@ block body
     .text
     .stems.english
       .section English
-        .menu
-          .item.active(data-id='text') Original Text
-          .item(data-id='stem') Stemmed
         .expl From Herman Melville's&nbsp;
           .explTitle Moby Dick
+        .menu
+          .item.active(data-id='text') Original Text
+          .item(data-id='stem') Processed
+        .legend
+          | The words are lowercased and&nbsp;
+          .filter.stemmed stemmed
+          |&nbsp;to their base or root form. Punctuation and word forms that are either too short or not in the dictionary are&nbsp;
+          .filter.removed removed
+          |. Finally,&nbsp;
+          .filter.duplicates duplucates
+          |&nbsp;are eliminated. Hover over the stemmed words to see the original.
       .text
     .stems.french
       .section French
@@ -47,4 +55,12 @@ block body
         .menu
           .item.active(data-id='text') Original Text
           .item(data-id='stem') Stemmed
+        .legend
+          | The words are lowercased and&nbsp;
+          .filter.stemmed stemmed
+          |&nbsp;to their base or root form. Punctuation and word forms that are either too short or not in the dictionary are&nbsp;
+          .filter.removed removed
+          |. Finally,&nbsp;
+          .filter.duplicates duplucates
+          |&nbsp;are eliminated. Hover over the stemmed words to see the original.
       .text

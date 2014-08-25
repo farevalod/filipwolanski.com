@@ -1,5 +1,3 @@
-
-
 renderStems  = (lang) ->
   $el = $ ".stems.#{lang} .text"
 
@@ -30,24 +28,40 @@ toggleStems = (lang, ev) ->
   $container.find('.word').removeClass 'hidden changed duplicate'
 
   uniques = []
-  if action is 'stem' then _.each data, (d, idx) ->
-    $e = $container.find("[data-id=#{idx}]")
+  if action is 'stem'
+    $(".stems.#{lang} .section .legend").show()
+    _.each data, (d, idx) ->
+      $e = $container.find("[data-id=#{idx}]")
 
-    if d.stem.length
-      if uniques.indexOf(d.stem) is -1 then uniques.push d.stem
-      else $e.addClass 'duplicate'
+      if d.stem.length
+        if uniques.indexOf(d.stem) is -1 then uniques.push d.stem
+        else $e.addClass 'duplicate'
 
-    unless d.stem.length then $e.addClass 'hidden'
-    else unless d.stem is d.token then $e.addClass 'changed'
-    if d.stem.length then $e.text d.stem
+      unless d.stem.length then $e.addClass 'hidden'
+      else unless d.stem is d.token then $e.addClass 'changed'
+      if d.stem.length then $e.text d.stem
 
-  else _.each data, (d, idx) -> $container.find("[data-id=#{idx}]").text d.word
+  else
+    $(".stems.#{lang} .section .legend").hide()
+    _.each data, (d, idx) -> $container.find("[data-id=#{idx}]").text d.word
 
+
+showFilter = (lang, ev) ->
+  $el = $ ev.currentTarget
+  filter = if $el.hasClass 'stemmed' then '.changed'
+  else if $el.hasClass 'removed' then '.hidden' else '.duplicate'
+
+  $container = $ ".stems.#{lang} .text"
+  $container.find(".word").not(filter).addClass 'hide'
+
+clearFilter = (lang) ->
+  $container = $ ".stems.#{lang} .text"
+  $container.find('.word').removeClass 'hide'
 
 $(window).load ->
-  renderStems "english"
-  $('.stems.english .menu .item').click _.partial toggleStems, 'english'
+  for lang in ['english', 'french']
+    renderStems lang
+    $(".stems.#{lang} .menu .item").click _.partial toggleStems, lang
+    $(".stems.#{lang} .legend .filter").hover _.partial(showFilter, lang), _.partial clearFilter, lang
 
-  renderStems 'french'
-  $('.stems.french .menu .item').click _.partial toggleStems, 'french'
 
