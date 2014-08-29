@@ -37,8 +37,9 @@
                                  :unique-token unique-token
                                  :unique-stem unique-stems)))))))
 
-(spit output-file (str "stems = "
-      (json/write-str {:english  (find-dupes (build-tree :english moby))
-                       :french (find-dupes (build-tree :french proust)) }) ";"))
+(defn write-example-json []
+  (spit output-file (str "stems = "
+                         (json/write-str {:english  (find-dupes (build-tree :english moby))
+                                          :french (find-dupes (build-tree :french proust)) }) ";")))
 
 
