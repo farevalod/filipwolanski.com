@@ -19,11 +19,16 @@ processData = ->
     author: key
     language: "english"
     expanded: false
+    "limited-stem-count": _.max(w.books, (b)-> b['limited-stem-count'])['limited-stem-count']
+    density: w['distinct-stem-count']/w['word-count']
   writers = writers.concat _.map d.french, (w,key) -> _.extend w,
     author: key
     language: "french"
     expanded: false
-  writers = _.sortBy writers, (w)-> -w['distinct-stem-count']
+    "limited-stem-count": _.max(w.books, (b)-> b['limited-stem-count'])['limited-stem-count']
+    density: w['distinct-stem-count']/w['word-count']
+
+  writers = _.sortBy writers, (w)-> -w['limited-stem-count']
 
   _.each writers, (w, i)->
     w.index = i
@@ -31,16 +36,17 @@ processData = ->
       author: w.author
       language: w.language
       dates: w.dates
+    writer['author-limited-stem-count'] = w['limited-stem-count']
     writer['author-distinct-stem-count'] = w['distinct-stem-count']
     writer['author-distinct-token-count'] = w['distinct-token-count']
     writer['author-word-count'] = w['word-count']
     writer['number-of-books'] = w.books.length
-    writer['author-density'] = w['distinct-token-count']/w['word-count']
+    writer['author-density'] = w['density']
     writer.index = i
-    writer.books = _.sortBy writer.books, (w)-> -w['distinct-stem-count']
+    writer.books = _.sortBy writer.books, (w)-> -w['limited-stem-count']
     books.push.apply books, _.map w.books, (b,i)->
       b['book-index'] = i
-      b['density'] =  b['distinct-token-count']/b['word-count']
+      b['density'] =  b['distinct-stem-count']/b['word-count']
       _.extend b, writer
 
   books = _.sortBy books, (w)-> -(w.index + w['book-index']/100)
@@ -58,11 +64,13 @@ setupAxis = (scale) ->
    .ticks 6
 
 setupScales = ->
-  max =  _.max _.pluck writers, 'distinct-stem-count'
-  max = 15000
+  max =  _.max _.pluck writers, 'limited-stem-count'
+  min =  _.min _.pluck writers, 'limited-stem-count'
+  min = min - 0.1*(max-min)
+  # max = 1000
   stem = d3.scale
     .linear()
-    .domain [max,0]
+    .domain [max,min]
     .range [0, chartHeight*rem - 2*rem ]
 
   max =  _.max _.pluck writers, 'word-count'
@@ -71,11 +79,11 @@ setupScales = ->
     .domain [0,max]
     .range [0, authorWidth*rem]
 
-  max =  _.max _.pluck books, 'density'
+  max =  _.max _.pluck writers, 'density'
   density = d3.scale
     .linear()
     .domain [0,max]
-    .range [0, 0.8]
+    .range [0, authorWidth*rem]
 
   stem:stem
   words:words
@@ -127,7 +135,7 @@ setupAuthors = _.once ->
   authors
 
 makeBookPositions = ->
-  value = 'distinct-stem-count'
+  value = 'limited-stem-count'
   index = []
 
   index.push.apply index, _.map _.filter(writers, (w)-> not w.expanded), (w,i)->
@@ -234,6 +242,7 @@ render = (opts) ->
 
   bks
     .attr 'transform', (d,i) ->
+      console.log i, heightFn(d,i), scales.stem(heightFn(d,i))
       "translate(#{positionFn(d,i)},#{(scales.stem(heightFn(d,i)) + rem)})"
     .attr 'opacity', getBookOpacity
   words.attr 'r', (d,i) ->

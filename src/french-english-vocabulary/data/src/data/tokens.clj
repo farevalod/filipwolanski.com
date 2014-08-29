@@ -1,9 +1,6 @@
 (ns data.tokens
   (:require [clojure.data.json :as json])
-  (:use opennlp.nlp
-        opennlp.tools.lazy
-        clojure.java.shell)
-  (:import com.atlascopco.hunspell.Hunspell))
+  (:use [data.stem :only [tokenizers tokenize stem]]))
 
 ;; some text
 
@@ -11,30 +8,6 @@
 (def proust "Longtemps, je me suis couché de bonne heure. Parfois, à peine ma bougie éteinte, mes yeux se fermaient si vite que je n’avais pas le temps de me dire : « Je m’endors. » Et, une demi-heure après, la pensée qu’il était temps de chercher le sommeil m’éveillait ; je voulais poser le volume que je croyais avoir encore dans les mains et souffler ma lumière ; je n’avais pas cessé en dormant de faire des réflexions sur ce que je venais de lire, mais ces réflexions avaient pris un tour un peu particulier ; il me semblait que j’étais moi-même ce dont parlait l’ouvrage : une église, un quatuor, la rivalité de François Ier et de Charles-Quint. Cette croyance survivait pendant quelques secondes à mon réveil ; elle ne choquait pas ma raison, mais pesait comme des écailles sur mes yeux et les empêchait de se rendre compte que le bougeoir n’était pas allumé.")
 (def output-file "stems.json")
 
-
-(def tokenizers
-  {:english (make-tokenizer "models/en-token.bin")
-   :french (make-tokenizer "models/fr-token.bin")})
-
-(def stemmers
-  {:english (Hunspell. "models/en.dic" "models/en.aff")
-   :french (Hunspell. "models/fr.dic" "models/fr.aff")})
-
-(defn remove-punctuation [s]
-  (let [ lower-s (clojure.string/lower-case s) ]
-    (clojure.string/replace lower-s #"[^a-z'`’\p{L}]]" "")))
-
-(defn split-hyphenation [s]
-    (clojure.string/split s #"-"))
-
-
-(defn tokenize [text lang]
-          (map remove-punctuation ((lang tokenizers) text)))
-
-
-(defn stem [s lang]
-  (map #(let [stem (if (empty? %) "" (.stem (lang stemmers) %))]
-                    (if (empty? stem) "" (apply min-key count stem))) s))
 
 (defn build-tree [lang text]
   (let [words ((lang tokenizers) text)
