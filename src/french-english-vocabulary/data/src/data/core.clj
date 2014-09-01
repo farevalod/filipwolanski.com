@@ -7,6 +7,7 @@
 
 
 (def limit 5000)
+(def rep 5)
 
 (def output-file "words.json")
 (def in-file "texts.edn")
@@ -31,6 +32,18 @@
         (recur (conj res (nth l (first pos))) (rest pos))))))
 
 
+(defn num-of-hapaxes [tokens lang]
+  (let [stems (stem tokens lang)
+        freqs (frequencies stems)]
+    (count (filter #(= 1 (val %)) freqs))))
+
+(defn get-average-unique-stems [tokens lang limit rep]
+  (/ (reduce
+       (fn [a b] (+ a (count (stem-and-unique
+                        (distinct (take-randomly-from-list tokens limit))
+                        lang))))
+       0 (range 0 rep)) rep))
+
 (defn process-book [lang book]
   (let [title (:title book)
         encoding (if (:encoding book) (:encoding book) "UTF-8")
@@ -40,34 +53,35 @@
         tokens (tokenize text lang)
         dtokens (distinct tokens)
         stemmed (stem-and-unique dtokens lang)
-        l-tokens (take-randomly-from-list tokens limit)
-        l-dtokens (distinct l-tokens)
-        l-stemmed (stem-and-unique l-dtokens lang)]
+        l-stem-count (get-average-unique-stems tokens lang limit rep)]
     (do
       (println (str "Processing " title))
       (hash-map :title title
                 :word-count (count tokens)
-                :distinct-tokens dtokens
+                :tokens tokens
                 :distinct-stems stemmed
                 :distinct-token-count (count dtokens)
                 :distinct-stem-count (count stemmed)
-                :limited-token-count (count l-dtokens)
-                :limited-stem-count (count l-stemmed)))))
+                :limited-stem-count l-stem-count
+                :num-of-hapaxes (num-of-hapaxes tokens lang)
+                ))))
 
 ; (process-book :english {:title "temp" :id 86 })
 
 (defn read-authors [lang obj]
   (map (fn [[author props]]
           (let [books (map (partial process-book lang) (:books props))
-                dtokens (mapcat #(:distinct-tokens %) books)
+                tokens (mapcat #(:tokens %) books)
                 stems (mapcat #(:distinct-stems %) books)
-                nbooks (map #(dissoc % :distinct-tokens :distinct-stems) books)
+                nbooks (map #(dissoc % :tokens :distinct-stems) books)
                 words (reduce + (map #(:word-count %) books))]
            (hash-map author {:dates (:dates props)
                              :books nbooks
-                             :distinct-token-count (count (distinct dtokens))
+                             :distinct-token-count (count (distinct tokens))
                              :distinct-stem-count (count (distinct stems))
                              :word-count words
+                             :limited-stem-count (get-average-unique-stems tokens lang limit rep)
+                             :num-of-hapaxes (num-of-hapaxes tokens lang)
                              })))
        obj))
 
@@ -85,7 +99,7 @@
 
 (defn -main [& args]
   (do
-    ; (write-example-json)
+    (write-example-json)
     (time (spit output-file (str "words = "
                     (json/write-str (read-input-file in-file)) ";")))
       (shutdown-agents)))

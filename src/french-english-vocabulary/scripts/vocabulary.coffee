@@ -1,5 +1,4 @@
 titleHeight = 5
-descHeight = 5
 authorWidth = 2
 chartHeight = 15
 bookWidth = 2
@@ -19,13 +18,11 @@ processData = ->
     author: key
     language: "english"
     expanded: false
-    "limited-stem-count": _.max(w.books, (b)-> b['limited-stem-count'])['limited-stem-count']
     density: w['distinct-stem-count']/w['word-count']
   writers = writers.concat _.map d.french, (w,key) -> _.extend w,
     author: key
     language: "french"
     expanded: false
-    "limited-stem-count": _.max(w.books, (b)-> b['limited-stem-count'])['limited-stem-count']
     density: w['distinct-stem-count']/w['word-count']
 
   writers = _.sortBy writers, (w)-> -w['limited-stem-count']
@@ -64,9 +61,11 @@ setupAxis = (scale) ->
    .ticks 6
 
 setupScales = ->
-  max =  _.max _.pluck writers, 'limited-stem-count'
-  min =  _.min _.pluck writers, 'limited-stem-count'
-  min = min - 0.1*(max-min)
+  max =  _.max _.pluck books, 'limited-stem-count'
+  min =  _.min _.pluck books, 'limited-stem-count'
+  delta  = 0.1*(max-min)
+  min -= delta
+  max += delta
   # max = 1000
   stem = d3.scale
     .linear()

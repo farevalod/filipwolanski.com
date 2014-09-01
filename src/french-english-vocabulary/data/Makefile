@@ -5,4 +5,3 @@ build:
 	mv words.json ../assets/
 	mv stems.json ../assets/
 
-
