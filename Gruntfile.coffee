@@ -9,14 +9,15 @@ pages = [
 ]
 
 files =
-  sass : ['styles/*.sass']
+  sass : ['styles/main.sass']
   jade : ['index.jade']
   assets : ['assets/*', 'vendor/**', 'favicon.png', 'robots.txt']
   coffee : ['scripts/*.coffee']
 
 for page in pages
+  unless fs.existsSync("src/pages/#{page}") then throw "#{page} doesn't exist"
   for filetype, list of files
-    list.push "#{page}/#{list[0]}"
+    list.push "pages/#{page}/#{list[0]}"
 
 # create the sitemap
 urls = [''].concat(pages).map (v) -> url: if v.length then "/#{v}/" else "/#{v}"
