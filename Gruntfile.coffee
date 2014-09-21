@@ -1,23 +1,59 @@
 # sitemap generator
 sm = require 'sitemap'
 fs = require 'fs'
+_ = require 'underscore'
 
 # list of the pages to be included in the site
 pages = [
   "montreal-realestate"
-  "french-english-vocabulary"
+  # "french-english-vocabulary"
 ]
 
 files =
-  sass : ['styles/main.sass']
-  jade : ['index.jade']
-  assets : ['assets/*', 'vendor/**', 'favicon.png', 'robots.txt']
-  coffee : ['scripts/*.coffee']
+  sass : [
+    expand: true
+    cwd: 'src',
+    src: ['styles/main.sass']
+    dest: 'public'
+    ext: '.css'
+  ]
+  jade : [
+    expand: true,
+    cwd : 'src'
+    src: ['index.jade']
+    dest: 'public',
+    ext: '.html'
+  ]
+  assets :[
+    expand:true,
+    cwd : 'src'
+    src:['assets/*', 'vendor/**', 'favicon.png', 'robots.txt']
+    dest:"public"
+  ]
+  coffee : [
+    expand:true
+    cwd : 'src'
+    src: [ 'scripts/*.coffee' ]
+    dest:"public"
+    ext: '.js'
+  ]
 
 for page in pages
   unless fs.existsSync("src/pages/#{page}") then throw "#{page} doesn't exist"
   for filetype, list of files
-    list.push "pages/#{page}/#{list[0]}"
+    template = _.clone list[0]
+    template.cwd = 'src/pages'
+    if filetype is 'assets' then template.src = ["#{page}/#{template.src[0]}", "#{page}/#{template.src[1]}"]
+    else template.src = ["#{page}/#{template.src[0]}"]
+    list.push template
+
+watch = {}
+for filetype, list of files
+  watch[filetype] = []
+  for l in list
+      cwd = l.cwd
+      for i in l.src
+        watch[filetype].push "#{cwd}/#{i}"
 
 # create the sitemap
 urls = [''].concat(pages).map (v) -> url: if v.length then "/#{v}/" else "/#{v}"
@@ -30,46 +66,17 @@ module.exports = (grunt) ->
 
   grunt.initConfig
 
-    sass:
-      dist:
-        files: [
-          expand: true,
-          cwd : 'src'
-          src: files.sass,
-          dest: 'public',
-          ext: '.css'
-        ]
+    sass: dist: files: files.sass
 
-    jade:
-      dist:
-        files: [
-          expand: true,
-          cwd : 'src'
-          src: files.jade,
-          dest: 'public',
-          ext: '.html'
-        ]
+    jade: dist: files: files.jade
 
-    copy:
-      dist:
-        files:[
-          expand:true,
-          cwd : 'src'
-          src:files.assets
-          dest:"public"
-        ]
+    copy: dist: files: files.assets
 
     coffee:
       dist:
         options:
           bare: true
-        files:[
-          expand:true
-          cwd : 'src'
-          src: files.coffee
-          dest:"public"
-          ext: '.js'
-        ]
+        files: files.coffee
 
     connect:
       server:
@@ -79,16 +86,16 @@ module.exports = (grunt) ->
 
     watch:
       sass:
-        files: "src/**/*.sass"
+        files: watch.sass
         tasks: ["sass:dist"]
       copy:
-        files: files.assets
+        files: watch.assets
         tasks: ["copy:dist"]
       jade:
-        files: "src/**/*.jade"
+        files: watch.jade
         tasks: ["jade:dist"]
       coffee:
-        files: "src/**/*.coffee"
+        files: watch.coffee
         tasks: ["coffee:dist"]
 
   grunt.loadNpmTasks "grunt-contrib-sass"
