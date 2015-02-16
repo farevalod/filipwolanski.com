@@ -1,0 +1,63 @@
+$base0: #333333
+$base1: #666666
+$base2: #999999
+$base3: #bbbbbb
+$base4: #cccccc
+$base5: #fafafa
+$red: #ff0801
+
+
+=border-radius($radius)
+  -webkit-border-radius: $radius
+  -moz-border-radius: $radius
+  -ms-border-radius: $radius
+  border-radius: $radius
+
+=transition($opts)
+  -webkit-transition: $opts
+  -moz-transition: $opts
+  -o-transition: $opts
+  transition: $opts
+
+=box-shadow($opts)
+  -webkit-box-shadow: $opts
+  -moz-box-shadow: $opts
+  box-shadow: $opts
+
+=transform($opts)
+  -webkit-transform: $opts
+  -moz-transform:    $opts
+  -ms-transform:     $opts
+  -o-transform:      $opts
+  transform:         $opts
+
+
+=transform($opts)
+  -webkit-transform: $opts
+  -moz-transform:    $opts
+  -ms-transform:     $opts
+  -o-transform:      $opts
+  transform:         $opts
+
+=timing($opts)
+  -webkit-transition-timing-function: $opts
+  -moz-transition-timing-function: $opts
+  -o-transition-timing-function: $opts
+  transition-timing-function: $opts
+
+
+@mixin animation($str)
+  -webkit-animation: #{$str}
+  -moz-animation: #{$str}
+  -ms-animation: #{$str}
+  -o-animation: #{$str}
+
+=keyframes($name)
+  @-webkit-keyframes #{$name}
+    @content
+  @-moz-keyframes #{$name}
+    @content
+  @-ms-keyframes #{$name}
+    @content
+  @keyframes #{$name}
+    @content

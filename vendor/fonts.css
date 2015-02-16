@@ -1,0 +1,66 @@
+@font-face {
+    font-family: 'fira';
+    src: url('../vendor/fonts/firasans-bold-webfont.eot');
+    src: url('../vendor/fonts/firasans-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../vendor/fonts/firasans-bold-webfont.woff') format('woff'),
+         url('../vendor/fonts/firasans-bold-webfont.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+
+}
+
+/* @font-face { */
+/*     font-family: 'fira'; */
+/*     src: url('../vendor/fonts/firasans-regular-webfont.eot'); */
+/*     src: url('../vendor/fonts/firasans-regular-webfont.eot?#iefix') format('embedded-opentype'), */
+/*          url('../vendor/fonts/firasans-regular-webfont.woff') format('woff'), */
+/*          url('../vendor/fonts/firasans-regular-webfont.ttf') format('truetype'); */
+/*     font-weight: 400; */
+/*     font-style: normal; */
+
+/* } */
+
+@font-face {
+    font-family: 'fira';
+    src: url('../vendor/fonts/firasans-light-webfont.eot');
+    src: url('../vendor/fonts/firasans-light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../vendor/fonts/firasans-light-webfont.woff') format('woff'),
+         url('../vendor/fonts/firasans-light-webfont.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'fira';
+    src: url('../vendor/fonts/firasans-lightitalic-webfont.eot');
+    src: url('../vendor/fonts/firasans-lightitalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../vendor/fonts/firasans-lightitalic-webfont.woff') format('woff'),
+         url('../vendor/fonts/firasans-lightitalic-webfont.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+
+}
+
+
+@font-face {
+    font-family: 'merriweather';
+    src: url('../vendor/fonts/merriweather-italic-webfont.eot');
+    src: url('../vendor/fonts/merriweather-italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../vendor/fonts/merriweather-italic-webfont.woff') format('woff'),
+         url('../vendor/fonts/merriweather-italic-webfont.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+
+}
+
+@font-face {
+    font-family: 'merriweather';
+    src: url('../vendor/fonts/merriweather-regular-webfont.eot');
+    src: url('../vendor/fonts/merriweather-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../vendor/fonts/merriweather-regular-webfont.woff') format('woff'),
+         url('../vendor/fonts/merriweather-regular-webfont.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+
+}

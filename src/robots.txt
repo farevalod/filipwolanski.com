@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: 
-
-Sitemap: http://filipwolanski.com/sitemap.xml 

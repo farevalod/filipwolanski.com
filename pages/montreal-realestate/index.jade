@@ -1,0 +1,76 @@
+extends wrapper
+
+block meta
+  title Exploring Montreal Real Estate
+  meta(property="og:image",content="http://filipwolanski.com/montreal-realestate/assets/montreal.avg.price.jpg")
+  meta(name='description', content='Exploring Montreal Real Estate')
+
+block body
+  #map
+  .main-container
+    #top.shadow.rounded-corners
+      .top-spacer
+        h1 Exploring Montreal Real Estate
+      p
+        | This map shows the data gathered from over 40,000 properties up for sale in
+        | the Greater Montreal area in May 2014.
+      h2
+      #legend
+        i.fa.fa-spinner.fa-spin.spinner
+        svg#legendSVG
+
+      .data-container
+        .data-title Map other data
+        .dataOption.active(data-id="data_points")
+          .ib.data-color
+          .desc.ib Properties for sale per sq.km.
+          .clear
+        .dataOption(data-id="avg_price")
+          .ib.data-color
+          .desc.ib Average property price
+          .clear
+        .dataOption(data-id="pp_foot")
+          .ib.data-color
+          .desc.ib Average price per square foot
+          .clear
+        .data-title.filter Filter by property type
+        .filterOption.active(data-id="house")
+          .icon.ib
+            i.fa.fa-check
+          .desc.ib Homes
+          .clear
+        .filterOption.active(data-id="town")
+          .icon.ib.town
+            i.fa.fa-check
+          .desc.ib.second Townhouses
+          .clear
+        .filterOption.active(data-id="condo")
+          .icon.ib
+            i.fa.fa-check
+          .desc.ib Condominiums
+          .clear
+
+      .social-spacer
+      .social-container
+        .social-button.ib
+          .fb-like(data-href="http://filipwolanski.com/montreal-realestate/", data-layout="button_count",
+            data-action="like", data-show-faces="false", data-share="true")
+        .social-button.ib.twitter
+          a.twitter-share-button(href="https://twitter.com/share",
+            data-url="http://filipwolanski.com/montreal-realestate/")
+
+  #popover.shadow.rounded-corners
+    .popover-content
+      .title This is the title
+      .subtitle This is the title
+      .body
+        .data-line
+          #dataTitle.table-title
+          #dataValue.table-value
+          .clear
+        .data-hline.data-hide-field
+        .data-line.data-hide-field
+          .table-title No. of Properties
+          #dataPoints.table-value
+          .clear
+      .empty There is no data for this region

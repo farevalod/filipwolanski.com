@@ -1,0 +1,149 @@
+extends wrapper
+
+block meta
+  title Do the English Use More Words than the French?
+  meta(property='og:title', content='Do the English Use More Words than the French?')
+
+  meta(property='og:description', content='An interactive exploration of the vocabulary size of some classic English and French writers')
+  meta(name="description", content="An interactive exploration of the vocabulary size of some greatest English and French writers from the late 16th to the early 20th century")
+
+  meta(property='og:image', content='http://filipwolanski.com/french-english-vocabulary/assets/og-image.jpg')
+
+
+block body
+  .top-header
+    .wrapper
+      .header
+        h1 Do the English Use More Words than the French?
+        h2 An interactive exploration of the vocabulary size of some classic English and French writers
+      .author Filip Wolanski &mdash; July 10, 2014
+      .social
+        .social-button.ib
+          .fb-like(data-href="http://filipwolanski.com/french-english-vocabulary/", data-layout="button",
+            data-action="like", data-show-faces="false", data-share="true")
+        .social-button.ib.twitter
+          a.twitter-share-button(href="https://twitter.com/share",
+            data-url="http://filipwolanski.com/french-english-vocabulary/",
+            data-count="none")
+      .clear
+
+  .wrapper
+    :markdown
+      The English language probably has more words than French. I say "probably" because no one can agree on what counts as a word and what doesn’t. Is "all-inclusive" one word or two? What about "govern," "government," and “misgovern?" There's been some serious fighting over this in linguistic circles, but examining the largest dictionaries in either language: *The Second Edition of the Oxford English Dictionary* has 218,623 words and 615,100 definitions, while *Le Grand Robert de la langue française* has about 100,000 words and 350,000 definitions. Of course, this says nothing about usage.
+
+      What I’m interested in is the vocabulary of some of my favorite writers. Who has the largest? Who has the most esoteric? And do the English use more words than the French?
+
+      As you've probably guessed, this isn't an exact science: I only take a few works of each author into account, I ignore homonyms and parts of speech, and I discard every word not in my dictionaries. All of these I do either because it's easier or more effective than the alternative, and all of these no doubt add to the inaccuracies of my results. But while the vocabulary sizes I report might be inaccurate, I take care to make sure they're *comparable*. Why I think so, together with my methods, I'll explain below--but first, the results.
+
+    h2.chart-filter
+      | Vocabulary Size of&nbsp;
+      span.filter.active(data-id='writers') Writers
+      | &nbsp;&&nbsp;
+      span.filter(data-id='books') Their Books
+
+  #chart.writers.noselect
+    .legendContainer#left-legend
+      svg#wordLegendLeft.actualLegend
+    .legendContainer#right-legend
+      svg#wordLegendRight.actualLegend
+    .authorsContainer#chartScroll
+      .viewport-scroll
+        .word-count-popup
+        svg#authors.noselect
+
+  .wrapper
+    .subtitle The vertical axis represents the measured vocabulary size and the size of circle the word count from which the vocabulary is sampled. English works are in red, French in blue.
+
+    :markdown
+      James Joyce is in first place, which isn't much of a surprise. The puns, parodies, allusions, stream-of-consciousness, and prose experiments of *Ulysses* are only part of why it took me the better part of a year to finish it. (By this measure, I also would expect David Foster Wallace's *Infinite Jest* to top this list).
+
+      What's more surprising is to see Flaubert so close behind. Unlike *Ulysses*, Flaubert's works aren't especially challenging; *Madame Bovary*, for example, is required reading in many high schools in France. Flaubert is reputed to have slowly worked out his sentences, looking for "le mot juste" that perfectly described what he wanted to say. I think his books are near the top not because he used obscure words, but because he used a wide variety of common ones--a sort of breadth over depth of vocabulary.
+
+      Rounding off the top three is Victor Hugo. It's amazing to see someone for whom writing came quickly (reportedly a rate of 100 lines of verse or 20 pages of prose each morning) nevertheless have such a wide grasp of the language. His vocabulary is considerable, and can give even experienced French readers trouble.
+
+      I expected to see Trollope and Austen in the lower ranks; they're superb stylists who rely on common words and an unadorned style to tell their stories. But I did expected some other English authors, particularly Dickens, Eliot, and Milton, to place higher than they did.
+
+      And Molière and Shakespeare too. Both are often called their nation's finest, and both are near the bottom of the list. Of course, vocabulary size is no indication of quality, but it's still interesting to see, especially in the case of Shakespeare, how reports of an exceptional vocabulary might be more myth than fact. I don't examine the invention of words, but it's reported that Shakespeare coined almost one-tenth of the words he used, so I'd be curious to know if those figures hold up as well.
+
+      Overall, there's a lot of blue at the top. I had expected the English to be well ahead, but in usage, I'd have to give the advantage to the French. It's remarkable just how close the results are; authors and books in both languages are mixed along the scale. Certainly my selection plays a big role here, but not enough to keep me from believing that vocabulary usage, at least among the classic writers, is about the same for both languages.
+
+      And what about the words themselves? Below I've mapped out each author's and book's "favorite" words:
+
+    h2 Favorite Words
+
+    .viz.words
+      .section
+        .menu
+      .text#unique
+
+    :markdown
+      In the word-clouds above, the size of each word represents its frequency in the text relative to other texts of the same language. So in Flaubert's *Madame Bovary*, for example, "pharmacienne" appears an  unusual number of times when compared to the other French texts. Many of the words that appear for each work describe it to some extent; they can be thought of as the "keywords" for their particular text.
+
+      It's interesting to see just how well unusual word frequency can describe some novels: "misunderstanding" and "inconsideration" are central to Austen's *Emma*, as are "self-importance" and "self-sufficiency" to *Pride and Prejudice*. Dickens' *Bleak House*, however, is less clearly represented by its word frequencies. Joyce's novels aren't at all. In Shakespeare's *King Lear*, words like "bastard," "bastardize," "flatterer," and "duteous" circle around the main themes of the play, as do "admonishment" and "hierarchy" in Milton's *Paradise Lost*.
+
+      I wonder how recent literature would look though this lens? I imagine the advice given by many writing coaches--"don't tell us, show us"--veils the subject of a work with objects and symbols. Naming something directly, as Austen and George Eliot do, is less popular today than it was in their time. Authors choose words based on what their readers expect, and so vocabulary isn't just about style and the words they know, but also about the tradition into which the text is written. It's this that the word-clouds illustrate best: that the vocabulary in a text might not measure how many words their author knows, but only how many words he needed to tell his story.
+
+    h2#stem-viz
+      | How the&nbsp;
+      span.filter.active(data-id='text') Source Text
+      | &nbsp;is&nbsp;
+      span.filter(data-id='stem') Processed
+      | &nbsp;and&nbsp;
+      span.filter(data-id='count') Counted
+
+  .stem-viz-container
+    #stem-scroll
+      div
+        .viz.english.stem-viz
+          .section-top
+            .expl From Herman Melville's&nbsp;
+              span.explTitle Moby Dick
+          .text
+        .viz.french.stem-viz
+          .section-top
+            .expl From Marcel Proust's&nbsp;
+              span.explTitle Du côté de chez Swann
+          .text
+        .clear
+      div
+        .viz.english.stem-viz
+          .total Total
+        .viz.french.stem-viz
+          .total Total
+        .clear
+
+  .wrapper
+    #unique-leg.subtitle
+      .text-showing The example text, both in English and French, is downloaded from Project Gutenberg or Wikisource.
+      .stem-showing.none
+        | The words are lowercased and&nbsp;
+        .filter.stemmed stemmed
+        |&nbsp;to their base or root form. Punctuation and word forms that are either too short or not in the dictionary are&nbsp;
+        .filter.removed removed
+        | . Hover over the stemmed words to see the original.
+      .count-showing.none Finally, the duplicate words are eliminated and we make a final count.
+
+    :markdown
+      Above is an demonstration of how I measure vocabulary. I start by discarding proper nouns and removing punctuation. Counting words as-is can be useful when comparing vocabulary among texts of the same language, but it doesn’t work well when two languages have wildly different grammatical features. Verb conjugation in French creates many variants of the same word, skewing the results.
+
+      So before counting, I stem. Stemming means reducing words to their base or root form. In English, for example, the verbs "is" and "was" become "be", while in French "est" and "était" become "être". It’s opinionated: “misgovern” and “government” are their own stems, as are hyphenated words such as “all-inclusive.” It's also not perfect: the stemmer is only as good as its dictionary--and while I took care in preparing the English and the French dictionaries, I can’t be sure they caught every word in the source texts.
+
+      Finally, I discard all words not in the dictionaries. This removes non-words and the remaining proper nouns that haven't yet been filtered out. As the word-clouds attest, this isn't always successful. Dictionary words such as "bloom" and "pip" remain, and have usually high frequencies where they're used as proper nouns in Joyce's *Ulysses* and Dickens' *Great Expectations*. In other cases, names that have become adopted by a language because of the popularity of a work, such as *Notre-Dame de Paris's* "Quasimodo", also remain. In any case, these extra words are comparatively few, and shouldn't give undue advantage to any particular author.
+
+      My sample size is the size of the text with the fewest words, which for an individual book is 7058 words, and for the authors is 30528 words. I sample randomly throughout a text, and verify that the counts are stable with multiple runs.
+
+    h2 The Code & Credits
+
+    :markdown
+      This project came about as an excuse to learn [Cascalog](http://cascalog.org/), so it's is built to run on Hadoop.
+      I use the [Hunspell](http://hunspell.sourceforge.net/) stemmer for stemming, and Apache's [OpenNLP](https://opennlp.apache.org/) library for tokenizing and name finding.
+      The source texts come from [Project Gutenberg](https://www.gutenberg.org/) and [Wikisource](http://fr.wikisource.org/wiki/Wikisource:Accueil).
+      The website uses [D3](http://d3js.org/) and Jason Davies' [d3-cloud](http://www.jasondavies.com/wordcloud/)
+      for the visualizations. The code for everything is available on [GitHub](https://github.com/fwolanski/filipwolanski.com/tree/master/pages/french-english-vocabulary).
+
+  footer
+    .wrapper
+      .left
+        a(href="/") home
+      .right &copy; 2015 Filip Wolanski
+      .clear

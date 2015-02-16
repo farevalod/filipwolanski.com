@@ -1,5 +1,6 @@
 .DS_Store
 node_modules
+cdn
 public
 .sass-cache
-src/pages/*
+.awspublish*

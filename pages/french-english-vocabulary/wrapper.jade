@@ -1,0 +1,54 @@
+doctype
+html.fouc
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+
+    meta(property='og:site_name', content='Filip Wolanski')
+    meta(property='og:type', content='website')
+    link(rel='author', href='https://plus.google.com/+FilipWolanski/posts')
+    meta(name="author", content="Filip Wolanski")
+
+    block meta
+
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name="google-site-verification",content="IC-txTnZsESG6wvzoQfULdfabaHpW2tUqKQoTxWBCF0")
+    link(rel="icon",type="image/png",href="/favicon.png")
+
+    for style in styles
+      link(rel='stylesheet',href=style)
+
+  body
+
+    .fb-root
+    script.
+      (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=229402287269401&version=v2.0";
+      fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    script.
+      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+    block body
+
+    for script in scripts
+      script(src=script)
+
+    script.
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-51418394-1', 'filipwolanski.com');
+      ga('send', 'pageview');
+
+    script.
+       document.addEventListener( "DOMContentLoaded", function(){
+            document.removeEventListener( "DOMContentLoaded", arguments.callee, false );
+            document.documentElement.className =
+             document.documentElement.className.replace("fouc","no-fouc");
+        }, false );

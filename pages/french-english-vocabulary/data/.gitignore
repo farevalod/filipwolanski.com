@@ -1,0 +1,15 @@
+/target
+/build
+/classes
+/checkouts
+pom.xml
+pom.xml.asc
+*.jar
+/*.json
+/*.js
+*.class
+/.lein-*
+/.nrepl-port
+/text
+/test
+/processed-text
