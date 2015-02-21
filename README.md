@@ -6,7 +6,7 @@ The source to filipwolanski.com. To run a local copy, run:
 git clone https://github.com/fwolanski/filipwolanski.com.git
 cd filipwolanski.com
 npm install
-grunt
+gulp
 ```
 
 Open `http://localhost:9000` in your favorite browser.

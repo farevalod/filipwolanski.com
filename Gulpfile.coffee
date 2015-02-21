@@ -31,7 +31,7 @@ pages = [
 
 files =
   jade : ['./index.jade', './error.jade']
-  assets : ['./assets/*', './vendor/**', 'favicon.png']
+  assets : ['./assets/*', './vendor/**', 'favicon.png', 'robots.txt']
   scripts : [
   ]
   styles : [
@@ -117,7 +117,7 @@ gulp.task 'clean', (cb) -> del [dest, cdn], cb
 gulp.task 'combine:scripts', ['clean'],  ->
   if files.scripts.length
     ord = files.scripts
-    files.scripts = ['scripts/all.min.js']
+    files.scripts = ['/scripts/all.min.js']
     coffee = gulp.src files.coffee, base: base
       .pipe coffee()
     js = gulp.src files.js, base: base
@@ -130,7 +130,7 @@ gulp.task 'combine:scripts', ['clean'],  ->
       .pipe gulp.dest dest
 
 gulp.task 'combine:styles', ['clean'],  ->
-  files.styles = ['styles/all.min.css']
+  files.styles = ['/styles/all.min.css']
   sass = gulp.src files.sass, base: base
     .pipe sass indentedSyntax: true
   css = gulp.src files.css, base: base
@@ -159,7 +159,7 @@ gulp.task 'copy:assets', ['clean'], ->
 
 gulp.task 'cdn', ['copy:assets','combine:jade', 'sitemap'], ->
     gulp.src "#{dest}/**"
-      .pipe revall ignore: ['favicon.png', '.html']
+      .pipe revall ignore: ['favicon.png', '.html', '.txt', 'sitemap.xml']
       .pipe gulp.dest cdn
 
 gulp.task 'copy:pages', ['cdn'], (cb) ->

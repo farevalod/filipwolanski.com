@@ -40,7 +40,7 @@ do ($ = jQuery, d3, window, document) ->
 
       positions = @calculatePositions 'limited-distinct'
       maxPosition = _.max(_.pluck positions, 'position')
-      $('#authors').width maxPosition + 3*authorWidth*rem + rem
+      $('.scroller').width maxPosition + 3*authorWidth*rem + rem
 
       scales = @setupScales @writersExpanded
       @axisL.scale scales.stem
@@ -66,6 +66,12 @@ do ($ = jQuery, d3, window, document) ->
 
         @legendL.transition().duration(transitionTime).call @axisL
         @legendR.transition().duration(transitionTime).call @axisR
+
+        $('.scroller').velocity 'scroll',
+          axis: 'x'
+          offset: '0'
+          container: $ '.viewport-scroll'
+
         $('#left-legend').velocity
           p:
             translateZ: 0
@@ -111,8 +117,8 @@ do ($ = jQuery, d3, window, document) ->
         radius = if @writersExpanded then scales.words d['count']
         else scales.words d['author-count']
 
-        y = scales.stem(heightFn(d,i)) - 1*rem - radius
-        x = positionFn(d,i) - authorWidth*rem  - 0.4*rem - $wcp.parent().scrollLeft()
+        y = -39.7*rem + scales.stem(heightFn(d,i)) - radius
+        x = positionFn(d,i) - authorWidth*rem  - 0.4*rem
 
         $wcp
           .css
@@ -191,7 +197,7 @@ do ($ = jQuery, d3, window, document) ->
       max =  _.max _.pluck all, 'limited-distinct'
       min =  _.min _.pluck all, 'limited-distinct'
 
-      delta  = 0.1*(max-min)
+      delta  = 0.2*(max-min)
       min -= delta
       max += delta
       # max = 1000

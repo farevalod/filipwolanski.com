@@ -16,15 +16,14 @@ block body
       .header
         h1 Do the English Use More Words than the French?
         h2 An interactive exploration of the vocabulary size of some classic English and French writers
-      .author Filip Wolanski &mdash; July 10, 2014
+      .author Filip Wolanski &mdash; January 10, 2015
       .social
         .social-button.ib
-          .fb-like(data-href="http://filipwolanski.com/french-english-vocabulary/", data-layout="button",
+          .fb-like(data-href="http://filipwolanski.com/french-english-vocabulary/", data-layout="button_count",
             data-action="like", data-show-faces="false", data-share="true")
         .social-button.ib.twitter
           a.twitter-share-button(href="https://twitter.com/share",
-            data-url="http://filipwolanski.com/french-english-vocabulary/",
-            data-count="none")
+            data-url="http://filipwolanski.com/french-english-vocabulary/")
       .clear
 
   .wrapper
@@ -48,11 +47,12 @@ block body
       svg#wordLegendRight.actualLegend
     .authorsContainer#chartScroll
       .viewport-scroll
-        .word-count-popup
-        svg#authors.noselect
+        .scroller
+          svg#authors.noselect
+          .word-count-popup
 
   .wrapper
-    .subtitle The vertical axis represents the measured vocabulary size and the size of circle the word count from which the vocabulary is sampled. English works are in red, French in blue.
+    .subtitle The vertical axis represents the vocabulary size while the size of circle the word count from which the vocabulary is sampled. English works are in red, French in blue.
 
     :markdown
       James Joyce is in first place, which isn't much of a surprise. The puns, parodies, allusions, stream-of-consciousness, and prose experiments of *Ulysses* are only part of why it took me the better part of a year to finish it. (By this measure, I also would expect David Foster Wallace's *Infinite Jest* to top this list).
@@ -77,11 +77,34 @@ block body
       .text#unique
 
     :markdown
-      In the word-clouds above, the size of each word represents its frequency in the text relative to other texts of the same language. So in Flaubert's *Madame Bovary*, for example, "pharmacienne" appears an  unusual number of times when compared to the other French texts. Many of the words that appear for each work describe it to some extent; they can be thought of as the "keywords" for their particular text.
+      In the word-clouds above, the size of each word represents its frequency in the text relative to other texts of the same language. So in Flaubert's Madame Bovary, for example, "pharmacienne" appears an  unusual number of times when compared to the other French texts. Many of the words that appear describe the work to some extent; they can be thought of as the "keywords" for their particular text.
 
-      It's interesting to see just how well unusual word frequency can describe some novels: "misunderstanding" and "inconsideration" are central to Austen's *Emma*, as are "self-importance" and "self-sufficiency" to *Pride and Prejudice*. Dickens' *Bleak House*, however, is less clearly represented by its word frequencies. Joyce's novels aren't at all. In Shakespeare's *King Lear*, words like "bastard," "bastardize," "flatterer," and "duteous" circle around the main themes of the play, as do "admonishment" and "hierarchy" in Milton's *Paradise Lost*.
+      It's interesting to see just how well unusual word frequency can describe some novels: "misunderstanding" and "inconsideration" are central to Austen's Emma, as are "self-importance" and "self-sufficiency" to Pride and Prejudice. Dickens' Bleak House, however, is less clearly represented by its word frequencies. Joyce's novels aren't at all. In Shakespeare's King Lear, words like "bastard," "bastardize," "flatterer," and "duteous" circle around the main themes of the play, as do "admonishment," "hierarchy," and the like in Milton's Paradise Lost.
 
-      I wonder how recent literature would look though this lens? I imagine the advice given by many writing coaches--"don't tell us, show us"--veils the subject of a work with objects and symbols. Naming something directly, as Austen and George Eliot do, is less popular today than it was in their time. Authors choose words based on what their readers expect, and so vocabulary isn't just about style and the words they know, but also about the tradition into which the text is written. It's this that the word-clouds illustrate best: that the vocabulary in a text might not measure how many words their author knows, but only how many words he needed to tell his story.
+      I wonder how recent literature would look though this lens? I imagine the advice given by many writing coaches--"don't tell us, show us"--veils the subject of a work with objects and symbols. Naming something directly, as Austen and George Eliot do, is less popular today than it was in their time. Authors choose words based on what their readers expect, and so vocabulary isn't just about style and the words the author knows, but also about the tradition into which the text is written. It's this that the word-clouds illustrate best: that the vocabulary in a text might not measure an author's lexicon, but only how many words he needed to tell his story.
+
+    h2 Vocabulary over Time
+
+  #dates.writers.noselect
+    .legendContainer#left-legend-date
+      svg#dateLegendLeft.actualLegend
+    .legendContainer#right-legend-date
+      svg#dateLegendRight.actualLegend
+    .authorsContainer#chartScroll
+      .date-viewport-scroll
+        .wrapper
+          svg#date.noselect
+          .bottom-legend-date
+            svg#dateLegendBottom.actualLegend
+        .date-count-popup
+
+  .wrapper
+    .subtitle The vertical axis represents the measured vocabulary size  and the horizontal the date when the work was published.
+
+    :markdown
+      In my data, the texts with the most words were published most recently. Does this mean modern authors need more words than they used to? In a sense, it does; but I think that this is more related to form and taste rather than the growth of vocabulary in a language. Most of the works I examined from the 17th century are plays, and plays, being dialog, don't need to describe and elaborate as novels do. Moreover, the novel underwent many changes throughout the 19th and 20th centuries. Flaubert, Joyce, Proust and others experimented with it, narrowing or expanding its focus, and creating new demands on its language. Joyce's Ulysses, for example, is deliberately dense: less a novel like those of Austen or Twain, it's practically an encyclopedia of everyday life.
+
+      Of course, not every author since Flaubert or Joyce writes like them. Recent writers have a rich tradition to draw on, and their choice as to where to fall in this tradition affects the words they use. So instead of a trend upwards, there's a widening of the range of vocabulary over time.
 
     h2#stem-viz
       | How the&nbsp;
@@ -128,7 +151,7 @@ block body
 
       So before counting, I stem. Stemming means reducing words to their base or root form. In English, for example, the verbs "is" and "was" become "be", while in French "est" and "était" become "être". It’s opinionated: “misgovern” and “government” are their own stems, as are hyphenated words such as “all-inclusive.” It's also not perfect: the stemmer is only as good as its dictionary--and while I took care in preparing the English and the French dictionaries, I can’t be sure they caught every word in the source texts.
 
-      Finally, I discard all words not in the dictionaries. This removes non-words and the remaining proper nouns that haven't yet been filtered out. As the word-clouds attest, this isn't always successful. Dictionary words such as "bloom" and "pip" remain, and have usually high frequencies where they're used as proper nouns in Joyce's *Ulysses* and Dickens' *Great Expectations*. In other cases, names that have become adopted by a language because of the popularity of a work, such as *Notre-Dame de Paris's* "Quasimodo", also remain. In any case, these extra words are comparatively few, and shouldn't give undue advantage to any particular author.
+      Finally, I discard all words not in the dictionaries. This removes non-words and the remaining proper nouns that haven't yet been filtered out. As the word-clouds attest, this isn't always successful. Dictionary words such as "bloom" and "pip" remain, and have usually high frequencies where they're used as proper nouns by Joyce and Dickens. In other cases, names that have become adopted by a language because of the popularity of a work, such as Notre-Dame de Paris's "Quasimodo", also remain. These extra words are comparatively few, however, and shouldn't give undue advantage to any particular author.
 
       My sample size is the size of the text with the fewest words, which for an individual book is 7058 words, and for the authors is 30528 words. I sample randomly throughout a text, and verify that the counts are stable with multiple runs.
 

@@ -30,6 +30,7 @@
   (println msg)
   (System/exit status))
 
+
 (defn -main [& args]
   (case (first args)
     "all" (do

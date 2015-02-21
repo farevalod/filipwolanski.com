@@ -74,7 +74,7 @@ body
         padding-right: 1rem
         vertical-align: top
         &.twitter
-          margin-top: 0.4rem
+          margin-top: 0.3rem
 
     h2
       text-align: center
@@ -122,10 +122,9 @@ body
       &.duplicates
         color: $base4
 
-  #chart
+  #chart, #dates
     width: 100%
     height: $barHeight+$descHeight
-    cursor: move
     position: relative
     margin: 1rem 0 0 0
     +transition(height 0.4s)
@@ -142,9 +141,8 @@ body
       opacity: 0
       width: 5rem
       margin: 0 auto
-      position: absolute
-      top: 0
-      left: 0
+      position: relative
+      display: inline-block
       background: $base2
       background: rgba(0,0,0,.8)
       +border-radius(.5rem)
@@ -176,9 +174,9 @@ body
       width: $legendWidth
       margin: 0 0 0 1rem
       z-index: 1
-      &#left-legend
+      &#left-legend, &#left-legend-date
         left: 0
-      &#right-legend
+      &#right-legend, &#right-legend-date
         right: 0
       .actualLegend
         height: $barHeight
@@ -204,7 +202,10 @@ body
         overflow: auto
         overflow-x: auto
         overflow-y: hidden
-      #authors
+      .scroller
+        height: 100%
+      #authors, #date
+        width: 100%
         height: 100%
         .book
           .rule
@@ -238,6 +239,68 @@ body
           &.inactive
             .bar
               background-color: $base3
+  #dates
+    height: 24rem
+
+
+    #chartScroll
+      height: 26rem
+      .wrapper
+        height: 100%
+        #date
+          height: 20rem
+      .date-viewport-scroll
+        height: 28rem
+        width: 100%
+        overflow: auto
+        overflow-x: auto
+        overflow-y: hidden
+
+    .bottom-legend-date
+      pointer-events: none
+      height: 2rem
+      width: 100%
+      margin: 0
+      .actualLegend
+        height: 2rem
+        width: 100%
+        pointer-events: none
+        .axis
+          text
+            font-size: 1rem
+            font-weight: 300
+          path,line
+            fill: none
+            stroke: $base1
+            shape-rendering: crispEdges
+
+    .date-count-popup
+      pointer-events: none
+      opacity: 0
+      margin: 0 auto
+      position: relative
+      background: $base2
+      background: rgba(0,0,0,.8)
+      +border-radius(.5rem)
+      color: $base4
+      display: inline-block
+      padding: 0.3rem 0.8rem
+      white-space: nowrap
+      z-index: 98
+      font-size: 0.8rem
+      text-align: center
+      +transition(opacity 0.4s)
+      &::before
+        border: solid
+        border-color: $base2 transparent
+        border-color: rgba(0,0,0,.8) transparent
+        border-width: .4rem .4rem 0 .4rem
+        top: 1.8rem
+        content: ""
+        display: block
+        left: 2rem
+        position: absolute
+        z-index: 99
 
 
   .viz
@@ -473,6 +536,10 @@ footer
       margin: 0
     #chart #right-legend
       display: none
+
+    #dates
+      #right-legend-date
+        display: none
 
 
     #stem-scroll

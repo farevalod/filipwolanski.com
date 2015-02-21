@@ -1,5 +1,6 @@
 (ns fevocabulary.download
-  (:require [clj-http.client :as client])
+  (:require [clj-http.client :as client]
+            [clojure.data.json :as json])
   (:use [clojure.java.shell]
         [cascalog.api])
   (:import [java.io.File]
@@ -86,7 +87,6 @@
 
     ))
 
-
 (defn wiki-find-book [title lang]
   (str (clean-filename title) ".txt"))
 
@@ -103,3 +103,15 @@
         source (if (:source book) (:source book) "gutenberg")
         id (:id book)]
     (find-book id encoding source lang)))
+
+
+
+(comment
+(spit "dates.text" (apply str (sort (map #(str (:title %) " publication date\n" )
+ (mapcat :books
+        (map second
+             (mapcat
+               first
+               (map second
+                    (read-string (slurp "texts.edn"))))))))))
+)

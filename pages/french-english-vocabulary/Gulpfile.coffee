@@ -34,12 +34,14 @@ files =
     "vendor/sticky.js"
 
     "scripts/vocabulary.coffee"
+    "scripts/dates.coffee"
     "scripts/stems.coffee"
     "scripts/unique.coffee"
 
     "assets/words.js"
     "assets/example.js"
     "assets/unique.js"
+    "assets/dates.js"
   ]
   styles : [
     'vendor/normalize.css'
